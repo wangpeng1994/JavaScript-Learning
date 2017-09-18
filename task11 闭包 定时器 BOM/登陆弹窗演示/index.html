@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="bom.js"></script>
+</head>
+<body>
+  <button id="button1">获取 a</button>
+
+  <script>
+    button1.onclick = function(){
+      console.log($.bom.search('名字'))
+      console.log($.bom.search('b'))
+      console.log($.bom.search('c'))
+      console.log($.bom.search('c', 'Benjamin'))
+    }
+    document.write(Math.random()) // 页面写入 随机数 [0,1)  用来检测当前父级是否刷新
+  </script>
+</body>
+</html>

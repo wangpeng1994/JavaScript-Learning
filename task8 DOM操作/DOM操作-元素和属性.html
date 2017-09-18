@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="ct">
+    <a href="">asdasd</a>
+    <h1 class='title'>hhhhhhhhhhhh</h1>
+    <p class="title"></p>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </div>
+<script>
+  
+  
+  
+  var ct = document.querySelector('#ct')
+  var node = document.createElement('img')
+  node.setAttribute('src', 'http://images.china.cn/attachement/jpg/site1000/20140924/002564bb43f1158ca2fc2d.jpg')  
+  ct.appendChild(node)
+  node.getAttribute('src')
+  node.removeAttribute('src')
+//  ct.innerHTML = '<img src="http://images.china.cn/attachement/jpg/site1000/20140924/002564bb43f1158ca2fc2d.jpg">'
+//  ct.innerText = 'hello'
+
+
+  node.classList // 查看所有的class
+  node.classList.add('active') // 给node 新增 class
+  node.classList.remove('active') // 把node 的class  active 删除
+  node.classList.contains('active') //检测是否包含这个active 这个class 返回布尔值
+
+
+
+  
+  console.log(ct.innerText)
+  console.log(ct.innerHTML)
+
+  
+  
+</script>     
+</body>
+</html>

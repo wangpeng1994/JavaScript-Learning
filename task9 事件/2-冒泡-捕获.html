@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .container {
+      width: 200px;
+      height: 200px;
+      border: 1px solid;
+    }
+    .box {
+      width: 100px;
+      height: 100px;
+      background: red;
+    }
+  
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box">
+      <button>点我</button>
+    </div>
+  </div>
+  <a id="link" href="http://jirengu.com">jirengu</a>
+
+
+
+
+  <script>
+  
+  document.body.addEventListener('click', function(){
+    console.log('body clicked...')
+  })
+  document.querySelector('.container').addEventListener('click', function(){
+    console.log('container clicked...')
+  })
+  document.querySelector('.box').addEventListener('click', function(e){
+    e.stopPropagation() // 取消事件进一步捕获或冒泡
+    console.log('box clicked...')
+  })
+  document.querySelector('button').addEventListener('click', function(){
+    console.log('button clicked...')
+  })
+  
+// button clicked...
+// box clicked...
+// container clicked...
+// body clicked...
+
+// 因为绑定事件处理程序第三个参数，默认是false，也就是事件冒泡阶段才处理，所以是从内到外的。如果指定了true，则在捕获阶段就会做出响应
+
+
+var link = document.querySelector('#link')
+
+link.addEventListener('click', function(e){
+  typeof e.preventDefault() // 取消事件默认行为
+})
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  </script>
+
+
+</body>
+</html>

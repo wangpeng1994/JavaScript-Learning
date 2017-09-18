@@ -1,0 +1,137 @@
+<script>
+  var a = 1
+  var b = a
+
+  a = 2
+  b == 1
+
+  var obj1 = {
+    age: 100,
+    friend: {
+      name: 'wangpeng',
+      sex: 'male'
+    }
+  }
+
+  var obj2 = obj1
+  obj1.age = 200
+  obj2.age == 200
+
+
+  //  如果想要 obj2内容和obj内容一样，但是是两个不同的区域。
+  // 这就要使用到对象的浅拷贝 和深拷贝，浅拷贝只拷贝一层
+
+  function copy(obj){
+    var newObj = {}
+    for(var key in obj){
+      newObj[key] = obj[key]
+    }
+    return newObj // 实际上return出来了newObj 指向的地址
+  }
+  var obj3 = copy(obj)
+  obj.age = 400
+  console.log(obj3)
+
+  /*
+  以上是浅拷贝，可见，浅拷贝之后，修改了obj.age的属性值，是不会影响到obj3的。
+  但是如果 obj.friend.name = 'xiaoming'
+  那么，obj3.friend.name = 'xiaoming'，也发生了变化。这是因为 obj.firend.name是引用类型
+  需要深拷贝
+  */
+  // 归根结底，还是引用类型的原因
+
+
+
+function copy(obj) {
+  var newObj = {}
+  for (var key in obj) {
+
+    if (obj.hasOwnProperty(key)) {
+
+      if (typeof obj[key] === 'number' ||
+        typeof obj[key] === 'boolean' || typeof obj[key] === 'string' || typeof obj[key] === undefined ||
+        typeof obj[key] === null) {
+        newObj[key] = obj[key]
+      } else {
+        newObj[key] = copy(obj[key])
+      }
+    
+    }
+
+  }
+  return newObj // 实际上return出来了newObj 指向的地址
+}
+var obj3 = copy(obj1)
+console.log(obj3)
+
+
+// 我自己重新写了一个，表明形参和实参不必一样，传入参数后，都会 var obj = obj1
+
+var obj1 = {
+  age: 20,
+  name: 'wangpeng',
+  friend : {
+    name: 'ruoyu',
+    sex: 'male'
+  }
+}
+
+function copy(obj){
+  var newObj = {}
+  for(key in obj){
+    if(obj.hasOwnProperty([key])){
+      if(typeof obj[key] === 'number' || typeof obj[key] === 'string' || typeof obj[key] === 'boolean' || 
+        typeof obj[key] === undefined || typeof obj[key] === null ){
+        newObj[key] = obj[key]    
+      }else{
+        newObj[key] = copy(obj[key])
+      }
+    }
+  }
+  return newObj
+}
+
+var obj2 = copy(obj1)
+console.log(obj2)
+
+
+// 使用JOSN 进行深拷贝
+
+
+
+
+var obj1 = {
+  age: 20,
+  name: 'wangpeng',
+  friend : {
+    name: 'ruoyu',
+    sex: 'male'
+  }
+}
+
+function copy(obj) {
+var newObj = {}
+newObj = JSON.parse( JSON.stringify(obj) )
+return newObj
+}
+
+var obj2 = copy(obj1)
+console.log(obj2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+

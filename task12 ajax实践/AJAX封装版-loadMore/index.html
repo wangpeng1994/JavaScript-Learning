@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>加载更多</title>
+  <style>
+    ul, li {
+      margin: 0;
+      padding: 0;
+    }
+    #ct li {
+      list-style: none;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    #ct li:hover {
+      background: pink;
+    }
+    #load-more {
+      display: block;
+      margin: 10px auto;
+      text-align: center;
+      cursor: pointer;
+    }
+    #load-more img {
+      width: 40px;
+      height: 40px;
+    }
+    .btn {
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      width: 140px;
+      border: 1px solid #aaa;
+      border-radius: 3px;
+      text-align: center;
+      text-decoration: none;
+      color: #666;
+    }
+    .btn:hover {
+      background: darkorange;
+      color:  sienna;
+    }
+  </style>
+</head>
+<body>
+  <ul id="ct"></ul>
+  <a id="load-more" class="btn" href="#">加载更多冷笑话</a>
+
+  <script>
+    
+    var btn = document.querySelector('#load-more')
+    var ct = document.querySelector('#ct')
+    var pageIndex = 0
+    var isDataArrive = true //设计个状态锁
+
+    btn.addEventListener('click', function(e){
+      e.preventDefault() //防止点击 a 链接页面跳到顶部 或者href里 javascript:void(0)
+      if(!isDataArrive){ // 1. 点击按钮后，一开始先判断，如果状态是false，数据还没到来，就直接忽略
+        return;
+      }
+      loadData(function(news){  //loadData(renderPage) // 执行loadData时，数据到了，执行callback，也就是传入的函数 renderPage
+        renderPage(news)
+        pageIndex += 5
+        isDataArrive = true
+      })
+      isDataArrive = false
+    })
+
+    function loadData(callback){
+      ajax({
+        type: 'get',
+        url: 'loadMore',
+        data: {
+          index: pageIndex,
+          length: 5 
+        },
+        onSuccess: callback,
+        onError: function(){
+          console.log('error')
+        }
+      })
+    }
+
+    function renderPage(news){
+      var fragment = document.createDocumentFragment() 
+      for( var i = 0; i < news.length; i++){
+        var node = document.createElement('li')
+        node.innerText = news[i]
+        fragment.appendChild(node)
+      }
+      ct.appendChild(fragment)
+    }
+
+    function ajax(options){
+      var xhr = new XMLHttpRequest()
+      xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+          if(xhr.status === 200 || xhr.status === 304){
+            var results = JSON.parse(xhr.responseText) 
+            options.onSuccess(results) //相当于callback(results)
+          }else{
+          options.onError()
+          }
+        }
+      }
+      var query = '?'
+      for(key in options.data){
+        query += key + '=' + options.data[key] + '&'
+      }
+      query = query.substr(0, query.length-1) //舍去最后一个&，截取出来
+      xhr.open(options.type, options.url + query, true)
+      xhr.send()
+    }
+
+
+  
+  </script>
+</body>
+</html>

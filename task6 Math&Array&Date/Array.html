@@ -1,0 +1,77 @@
+<script>
+
+
+// 2、写一个函数，操作数组，数组中的每一项变为原来的平方，在原数组上操作
+
+function squareArr(arr){
+  for(var i = 0; i < arr.length; i++){
+    arr.splice(i,1,Math.pow(arr[i],2))
+  }
+}
+var arr = [2, 4, 6]
+squareArr(arr)
+console.log(arr) // [4, 16, 36]
+
+
+
+function filterPositive(arr){
+  var newArr = []
+  for(var i = 0; i < arr.length; i++){
+    if(typeof arr[i] === 'number' && arr[i] > 0 ){
+      newArr.push(arr[i])
+    }
+  }
+  return newArr
+}
+var arr = [3, -1,  2,  '饥人谷', true]
+var newArr = filterPositive(arr)
+console.log(newArr) //[3, 2]
+console.log(arr) //[3, -1,  2,  '饥人谷', true]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

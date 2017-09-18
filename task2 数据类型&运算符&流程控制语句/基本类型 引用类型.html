@@ -1,0 +1,99 @@
+<script>
+
+
+// 函数的参数传递
+
+function inc(n){
+    //var n = a
+    n++;
+}
+var a = 10;
+inc(a);
+console.log(a);
+
+/*
+
+globalContext = {
+  AO: {
+    inc: function
+    a: 10
+  }
+}
+inc.[[scope]] = globalContext.AO
+
+incContext = {
+  AO: {
+    n: 10
+  }
+}
+
+*/
+
+console.log('------------')
+
+
+
+function incObj(obj){
+    //var obj = o
+    obj.n++;
+}
+
+var o = {n: 10};  
+incObj(o);
+console.log(o);
+
+
+console.log('------------')
+
+
+
+
+// arr 最后变了
+var arr = [3, 4, 5]
+function squireArr(arr){
+  for(var i = 0; i < arr.length; i++ ){
+    arr[i] = arr[i] * arr[i]
+  }
+}
+squireArr(arr)
+console.log(arr)
+// [9, 16, 25]
+
+console.log('------------')
+
+
+// arr 最后没变，因为开辟了一个新的地址
+var arr = [3, 4, 5]
+function squireArr2(arr){
+    var newArr = [];
+    for(var i = 0; i < arr.length; i++){
+        newArr[i] = arr[i] * arr[i];
+    }
+    return newArr;
+}
+var arr2 = squireArr2(arr)
+console.log(arr2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+

@@ -1,0 +1,48 @@
+<script>
+
+
+var a = 1, b = 2, c = 3;
+var val = typeof a + b || c >0
+console.log(val) 
+// 输出 number2 
+// 因为'number2' 是非空字符串，所以转boolean为true，又因为是|| 或运算符，前者为true，直接返回前者赋值给val（注意不是返回布尔值）
+
+
+var d = 5;
+var data = d == 5 && console.log('bb')
+console.log(data)
+// 输出 bb undefined
+// 首先判断 d == 5，结果是true，然后执行 console.log('bb')，因为没有指定返回值，所以返回undefined， 然后赋值给 data， 最后 console.log(data),所以就是undefined。
+// 挖的坑在于，这里的console.log('bb')，可不是把打印出来的bb赋值给data，
+// 需要明白 console.log('bb')，本身也是一个函数，函数能对外提供的就是它的return返回值。
+// BTW，如果 var data = d == 0 && console.log('bb') 这样写的话，就直接返回false 给data， data 就是 boolean，值就是false。 所以或运算，与运算，返回的是布尔值，还是其他值，要看情况
+
+
+var data2 = d = 0 || console.log('haha')
+console.log(data2)
+// 输出 haha undefined
+// 理由同上，不同点在于这里是或运算符。所以 左边的 0  转为 false 后，要看右边的返回结果，右边返回 undefined，所以 console.log(data2) 是undefined
+ 
+var x = !!"Hello" + (!"world", !!"from here!!");
+console.log(x)
+// 输出 2
+// Hello world ,还有什么frome here!! ,都是障眼法，无需关注字符串里面具体是什么，只要// 不是空字符串，哪怕是含有空格的字符串'  '，转换布尔值的时候都是true,
+// 再考虑下括号和逗号运算符的优先级，于是 var x = true + true， 然后遇见 + 加法运算符，
+// 被转换成 number类型 ，最后就是问 1 + 1 = 几？
+
+
+
+
+// 打印 数组每一项的平方
+var arr = [3,4,5]
+for(var i = 0; i < arr.length; i++){
+  console.log(arr[i]*arr[i])
+}
+
+
+
+
+
+
+
+</script>

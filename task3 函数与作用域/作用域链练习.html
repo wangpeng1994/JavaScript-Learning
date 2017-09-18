@@ -1,0 +1,334 @@
+<script>
+  
+
+// 第 6 题，求n! , 用递归来实现
+
+function factor(n){
+  if(n === 1) {
+    return 1
+  }
+  return n * factor(n-1)
+}
+factor(5)
+
+
+function factor(n){
+  if(n === 0 || n === 1) {
+    return 1
+  }else if(n < 0){
+    console.log('负数没有阶乘')
+  }
+  return n * factor(n-1)
+}
+factor(5)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 第 7 题
+
+function getInfo(name, age, sex){
+		console.log('name:',name);
+		console.log('age:', age);
+		console.log('sex:', sex);
+		console.log(arguments);
+		arguments[0] = 'valley';
+		console.log('name', name);
+	}
+
+getInfo('饥人谷', 2, '男');
+// 输出如下：
+// name: 饥人谷
+// age: 2
+// sex: 男
+// ['饥人谷', 2, '男']
+// name: valley
+
+getInfo('小谷', 3);
+// 输出如下：
+// name: 小谷
+// age: 3
+// sex: undefined
+// ['小谷', 3]
+// name: valley
+
+getInfo('男');
+// 输出如下：
+// name: 男
+// age: undefined
+// sex: undefined
+// ['男']
+// name: valley
+
+
+
+// 第 8 题 ，写一个函数返回参数的平方和
+
+function sumOfSquares(){
+  var s = 0
+  for (var i = 0; i < arguments.length; i++){
+  s += arguments[i] * arguments[i]
+  }
+  return s
+}
+var result = sumOfSquares(2,3,4)
+var result2 = sumOfSquares(1,3)
+console.log(result)  //29
+console.log(result2)  //10
+
+
+// 第 9 题
+
+console.log(a);
+var a = 1;
+console.log(b);
+
+// 输出： undefined  b is not defined
+// 原因： 变量声明会提升，但是值不会提升，因此console.log(a)输出 undefined，而console.log(b）纯属调皮打酱油
+
+
+
+// 第 10 题
+
+sayName('world');
+sayAge(10);
+function sayName(name){
+  console.log('hello ', name);
+}
+var sayAge = function(age){
+  console.log(age);
+};
+
+// 会输出 
+// hello  world
+// sayAge is not a function
+// 因为 console.log() 中的 , 逗号相当于加号，把str 'hello ' 和 传进来的 函数实参 'world'做拼接
+// sayAge 是 函数表达式，声明必须放在调用的前面，而 sayName 为什么可以？因为它是函数声明，
+// 使用了function 关键字来声明一个函数， 这种声明不必非要放到调用前面
+
+
+// 第 11 题
+
+var x = 10
+bar() 
+function foo() {
+  console.log(x)
+}
+function bar(){
+  var x = 30
+  foo()
+}
+
+/*
+
+1.
+globalContext = {
+  AO: {
+    x: 10
+    foo: function
+    bar: function
+  }
+}
+
+foo.[[scope]] = globalContext.AO
+bar.[[scope]] = globalContenxt.AO
+
+2.
+barContext = {
+  AO: {
+    x: 30
+  },
+  Scope: globalContenxt.AO
+}
+
+3.
+fooContext = {
+  AO: {}
+  Scope: globalContext.AO
+}
+
+*/
+
+// 输出 10 
+// 因为console.log(x) 中的x在 foo 的AO（活动对象）中并没用定义，所以根据foo的scope 找到globalContext 里面的AO，这里指出 x = 10， 所以最终结果是 10
+
+
+
+// 第 12 题
+
+var x = 10;
+bar() 
+function bar(){
+  var x = 30;
+  function foo(){
+    console.log(x) 
+  }
+  foo();
+}	
+
+/*
+
+1.
+globalContext = {
+  AO: {
+    x: 10
+    bar: function(){}
+  }
+}
+bar.[[scope]] = globalContext.AO
+
+2.
+barContext = {
+  AO: {
+    x: 30
+    foo: function(){}
+  },
+  Scope: globalContext.AO
+}
+foo.[[scope]] = barContext.AO
+
+3.
+fooContext = {
+  AO: {},
+  Scope: barContext.AO
+}
+
+*/
+
+// 输出 30 
+// 首先调用函数bar() ,进入后调用foo(), 执行console.log(x) , foo的 AO 中没有x，则寻找foo的scope，
+// 来到了 bar 的 AO，定义了 x:30 ， 所以最后输出 30
+
+
+// 第 13 题
+
+var x = 10;
+bar() 
+function bar(){
+  var x = 30;
+  (function (){
+    console.log(x)
+  })()
+}
+
+/*
+
+1.
+globalContext = {
+  AO: {
+    x: 10
+    bar function(){}
+  }
+}
+bar[[scope]] = globalContext.AO
+
+2.
+barContext {
+  AO: {
+    x: 30
+    noName: function(){}
+  },
+  Scope: globalContext.AO
+}
+noName.[[scope]] = barContext.AO
+
+
+3.
+noNameContext {
+  AO: {},
+  Scope: barContext.AO
+}
+
+*/
+
+// 输出 30
+// 执行bar, 然后立即执行匿名函数，执行console.log(x)，x在自身AO中未定义，
+// 继续看Scope,指向 barContext.AO , barContext的AO中定义了 x: 30，故最后输出30
+
+
+// 第 14 题
+
+var a = 1;
+
+function fn(){
+  console.log(a)
+  var a = 5
+  console.log(a)
+  a++
+  var a
+  fn3()
+  fn2()
+  console.log(a)
+
+  function fn2(){
+    console.log(a)
+    a = 20
+  }
+}
+
+function fn3(){
+  console.log(a)
+  a = 200
+}
+
+fn()
+console.log(a)
+
+/*
+
+1.
+globalContext = {
+  AO: {
+    a: 1 ( =======> 200 )
+    fn: fcuntion(){}
+    fn3: function(){}
+  }
+}
+fn.[[scope]] = globalContext.AO
+fn3.[[scope]] = globalContext.AO
+
+2.
+fnContext = {
+  AO: {
+    a: 5 （  a++ =====> 6  ）(  6 ==========> 20  )
+    fn2: function(){}
+  },
+  scope: globalContext.AO
+}
+fn2.[[scope]] = fnContext.AO
+
+3.
+fn3Context = {
+  AO: {},
+  scope: globalContext.AO
+}
+
+4.
+fn2Context = {
+  AO: {},
+  scope: fnContext.AO
+}
+
+*/
+
+// 输出： undefined 5 1 6 20 200
+// 简单说下注意点，首先变量声明和函数声明都会前置
+// var a = 5，再去 var a 重复声明一个已经存在的变量，原变量值不变
+// a = 20 和 a = 200,都不属于当前函数的活动对象，只是赋值，具体赋值给了哪个 var a，因为自身函数内没有声明变量，
+// 因此就要顺着 scope chain 往上级去找
+
+
+
+</script>

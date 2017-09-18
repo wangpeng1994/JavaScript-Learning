@@ -1,0 +1,134 @@
+<script>
+
+var arr = [3, 4, 5, -1]
+arr.forEach(function(value,index){
+  console.log(value,index)
+})
+
+var isPositive = arr.every(function(value){
+  return value > 0
+}) // 每个回调函数 都返回 true ，every 最后才会返回 true
+
+var hasPositive = arr.some(function(value){
+  return value > 0
+}) // 回调函数 只要有一项返回 true ，即终止 some 返回 true
+
+
+// 回调函数返回值组成新数组返回
+// 返回新数组，元素为原来的平方
+var newArr = arr.map(function(value){·
+  return value * value
+})
+console.log(newArr)
+console.log(arr)
+
+// 或者是用forEach, 但是这样代码比较多
+var newArr = []
+arr.forEach(function(value,index){
+  newArr[index] = value * value
+})
+console.log(newArr)
+console.log(arr)
+
+// .filter 可以返回数组的一个子集， 回调函数用于逻辑判断是否返回，true就把当前元素返回到新数组中
+var positiveArr = arr.filter(function(value){
+  return value > 0
+})
+console.log(positiveArr)
+console.log(arr)
+
+// 或者如下方法
+var arr = [3, 4, 5, -1]
+var positiveArr = []
+for(var key in arr){
+  if(arr[key] > 0){
+  positiveArr[key] = arr[key]
+  }
+}
+console.log(positiveArr)
+console.log(arr)
+
+// filter ，如果不是数字，而是对象的集合
+
+var students = [
+  {username: 'aae', age: 20},
+  {username: 'bab', age: 23},
+  {username: 'ddd', age: 21},
+  {username: 'cca', age: 22},
+]
+
+var newStudents = students.filter(function(student){
+  return student.username.indexOf('a') > -1 
+  // .indexOf 查找是否含有指定元素，有就返回索引，无就 -1
+})
+console.log(newStudents)
+
+
+
+var a = [1,2,3,4,5,6]
+
+var aa = a.reduce(function(v1,v2){
+  console.log(v1,v2)
+  return v1 - v2
+})
+
+
+// 总结，最常用的就是 for each    filter   map
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 包装成数组 ，臣妾做不到啊
+var arr = [1, 2, 3, 4, 5]
+                //  6, 7, 8
+function push(arr, addArr){
+  //addArr2 = addArr1.slice(',')
+  addArr.toString()
+  for(var key in addArr){
+    arr.splice(arr.length, 0, addArr[key])
+  }
+  return arr
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

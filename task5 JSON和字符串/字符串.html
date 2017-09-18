@@ -1,0 +1,137 @@
+<script>
+
+var str3 = "王鹏"
+
+var str4 = '"haha I say"'
+
+var str5 = 'hello\', world '
+
+var str6 = "hello\" world"
+
+var str7 = 'hello \n world'
+
+var str8 = 'hello\tworld'
+
+var str9 = 'a\ \
+b\ \
+c'
+
+var str10 = 'pre\ text'
+
+
+var fn = function () { /*
+  <div>
+    <a href="http://jirengu.com">饥人谷</a>
+  </div>
+*/}
+
+//  大小写 ,返回的是新的字符串
+var str = "Hello";
+    str.toUpperCase();
+    str.toLowerCase();
+
+console.log(fn.toString().split('\n').slice(1,-1).join('\n'))
+
+// toString() 方法可把一个逻辑值转换为字符串，并返回结果。
+// split() 方法用于把一个字符串分割成字符串数组。参数代表 从该参数指定的地方分割
+// 如果以 split('') 空字符串作为切割，那么得到的是字符串每一个单个字符的数组
+
+// slice() 方法可提取字符串(或者数组)的某个部分，并以新的字符串返回被提取的部分。参数代表起始下标，和结尾下标，负数代表倒着数
+// join() 方法用于把数组中的所有元素放入一个字符串。元素是通过指定的分隔符进行分隔的。
+
+// 结果如下：
+
+/*
+  <div>
+    <a href="http://jirengu.com">饥人谷</a>
+  </div>
+*/
+
+console.log('------------------------------')
+
+// 字符串的常用操作  字符串所有的操作，都不会改变原有字符串，是新建的字符串？
+
+var str11 = 'hello '
+var str12 = 'world'
+console.log(str11 +str12)
+
+console.log(str11.length)
+// 使用 str[] ，下标超出后输出 undefined
+console.log(str11[4])
+console.log(str12[str12.length - 1])
+
+// 使用charAt()  参数代表下标 下标超出后，输出空字符串
+// 使用charCodeAt() 输出指定下标位置的字符的 ASCLL 码， 下标超出后，输出 NaN
+
+// 1. 字符串截取
+
+var str = "hello world";
+var sub1 = str.substr(1, 3); // 第一个是开始位置， 第二个是长度  ell
+var sub2 = str.substring(1, 3); // 第一个是开始位置，第二个是结束位置，长度为第二个－第一个  el
+var sub3 = str.slice(1, 3); // 同上 允许负参
+
+
+ // 2. 查找
+var str = "hello my world";
+var s1 = str.search('my');   //6  输出为下标， 找不到为-1
+var s2 = str.replace('my', 'your'); //
+var s3 = str.match('my'); //返回匹配的数组
+
+
+ // 3. 大小写
+
+var str = "Hello";
+str.toUpperCase();
+str.toLowerCase();
+
+
+// 4. 字符串切割  成 数组
+
+var str = 'hello';
+str.split(','); // 切割时以逗号作为分隔符
+// 如果以 split('') 空字符串作为切割，那么得到的是字符串每一个单个字符的数组
+// 如果 split('e')  那么，['h', 'llo'] ，以谁作为切割符界限，谁就化为了数组中的逗号
+
+// 应用一： 判断字符串是否是回文  abcdedcba  123454321 这个就是回文，对称
+
+var str = '123454321'
+str.split('') // ["1", "2", "3", "4", "5", "4", "3", "2", "1"]
+str.split('').reverse() // ["1", "2", "3", "4", "5", "4", "3", "2", "1"]
+str.split('').reverse().join('') // '123454321'
+// 变为数组，数组里有倒序，然后再把数组变为字符串
+str == str.split('').reverse().join('')
+
+function isReverse(str){
+  return str === str.split('').reverse().join('')
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

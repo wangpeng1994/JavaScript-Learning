@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+  <script>
+  
+  var Car = (function(){
+    var speed = 0;
+    function setSpeed(s){
+      speed = s
+    }
+    function getSpeed(){
+      return speed
+    }
+    function accelerate(){
+      speed += 10
+    }
+    function decelerate(){
+      if(speed !== 0){
+        speed -= 10
+      }
+    }
+    function getStatus(){
+      return (speed === 0)?'stop':'running'
+    }
+    return {
+      // 返回对象的属性是方法（如果一个属性的值为函数，通常把这个属性称为“方法”）
+      setSpeed: setSpeed, // 这里属性名和值不一定要一样，也可以把上面的方法函数匿名写在这里
+      getSpeed: getSpeed,
+      accelerate: accelerate,
+      decelerate: decelerate,
+      getStatus: getStatus
+    }
+ })() //Car立即执行后返回的是对象，对象里存的方法
+
+ //对象.方法（）
+ Car.setSpeed(30);
+ Car.getSpeed(); //30
+ Car.accelerate();
+ Car.getSpeed(); //40;
+ Car.decelerate();
+ Car.decelerate();
+ Car.getSpeed(); //20
+ Car.getStatus(); // 'running';
+ Car.decelerate(); 
+ Car.decelerate();
+ Car.getStatus();  //'stop';
+ //Car.speed;  //error 这样是get不到speed的，speed是被封装在函数里的变量，只能用提供的方法间接访问
+  
+  </script>
+</body>
+</html>

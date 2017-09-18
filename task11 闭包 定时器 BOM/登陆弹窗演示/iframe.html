@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <button id="button2">reload</button>
+  <script>
+    // 点击iframe 的按钮后，让父级窗口刷新
+    button2.onclick = function(){
+      window.opener.location.reload() //让打开我的窗口刷新
+      window.close() //自己关闭
+    }
+  </script>
+</body>
+</html>

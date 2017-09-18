@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <style>
+    .container {
+      margin: 30px auto;
+      width: 900px;
+    }
+    ul {
+      background: pink;
+    }
+    ul, li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .container li {
+      border: 1px solid #ccc;
+      line-height: 1.5;
+      margin-right: 30px;
+    }
+    #show {
+      background: #ccc;
+    }
+  
+  
+  
+  </style>
+</head>
+<body>
+  <div class="container">
+    <ul>
+      <li>aa</li>
+      <li>bb</li>
+      <li>cc</li>
+      <li>dd</li>
+    </ul>  
+    <input type="text" id="add-ipt"><button id="btn">添加</button>
+    <div id="show"></div>
+  
+    <script>
+   
+    var liNodes = document.querySelectorAll('.container li')
+    var showNode = document.querySelector('#show')
+    var addNode = document.querySelector('#btn')
+    var addIpt = document.querySelector('#add-ipt')
+    var container = document.querySelector('.container ul')
+    
+    /*
+    liNodes.forEach(function(node){
+      node.addEventListener('click', function(){
+        showNode.innerText = this.innerText
+      })
+    })
+
+    addNode.addEventListener('click', function(){
+      var node = document.createElement('li')
+      node.innerText = addIpt.value
+      container.appendChild(node)
+      node.addEventListener('click', function(){
+        showNode.innerText = this.innerText
+      })
+    })
+    */
+
+    /*
+    以上写法有个问题，后面如果用AJAX从服务器请求到大堆字符串，然后拼接成html，结构很复杂，就不可能再去绑定事件，所以需要用到事件代理，
+    也就是利用了事件的冒泡，在上层元素中进行绑定监听，下面是事件代理的写法
+    */
+
+    container.addEventListener('click', function(e){
+      var target = e.target // e.target 就是具体的产生事件对象的元素，某个li
+      if(target.tagName.toLowerCase() === 'li'){
+        showNode.innerText = target.innerText
+      } // 增加判断，确定点在了li上，而不是li的margin上，也就是ul上
+    })
+    
+    addNode.addEventListener('click', function(){ // 绑定按钮点击事件
+      var node = document.createElement('li') // 新增li元素
+      node.innerText = addIpt.value // 从input获取内容放入li
+      container.appendChild(node) // 把li添加到ul子元素最后面
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+  
+  </div>  
+</body>
+</html>

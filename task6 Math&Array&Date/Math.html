@@ -1,0 +1,137 @@
+<script>
+
+
+console.log(Math.PI)
+
+
+console.log(Math.round(0.6))
+
+console.log(Math.abs(-69,2,3,-1))
+
+
+// Math.random 重点介绍
+
+// 得到 [a, b) 随机数
+
+// n + Math.floor( Math.random()*10 )
+
+function random(a, b){
+  return a + Math.floor(Math.random()*(b-a))
+}
+
+var arr = []
+for(i = 0; i < 50; i++){
+  arr.push(random(0,10))
+}
+
+console.log(arr)
+
+////////////////////////////////////////////////////////////////////////
+
+/*
+需要用户名，昵称，没填，随机生成。 8位
+0~1， 用random 得到a，b之间任意整数
+有字符串，有任意字符， 随机下标，就能得到随机字符串
+*/
+// 得到一个随机字符串
+
+function randomStr(len) {
+  var dict = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  var str = ''
+  for(var i = 0; i < len; i++){
+    str += dict[random(0, 62)]
+  }
+  return str
+}
+randomStr(8) // 得到8位的随机字符串
+
+// 或者内部构造随机数算法
+function getRandStr(len){
+  var dict = '0123456789zxcvbnmasdfghjklqwertyuiopZXCVBNMASDFGHJKLQWERTYUIOP'
+  var str = ''
+  for(var i = 0; i < len; i++){
+    str += dict[Math.floor(Math.random()*62)]
+  }
+  return str
+}
+var str = getRandStr(10)
+
+//////////////////////////////////////////////////////////////////////////
+
+// 得到一个随机的ip地址 IP 0.0.0.0 ~ 255.255.255.255
+
+function randomIp(){
+  var arr = []
+  for(var i = 0; i < 4; i++){
+    arr.push(random(0,256))
+  }
+  return arr.join('.')
+}
+// 或者内部构造随机算法
+function getRandIP(){
+  var arr = []
+  for(var i = 0; i < 4; i++){
+    arr.push(Math.floor(Math.random()*256))
+  }
+  return arr.join('.')
+}
+
+var ip = getRandIP()
+console.log(ip)
+
+
+/////////////////////////////////////////////////////////////////
+
+// 得到随机颜色 #0022ff
+
+
+
+if(Math.random > 0.5){
+  console.log('我赢了')
+}else(
+  console.log('我输了')
+)
+
+
+// 写一个函数，生成一个随机颜色字符串，合法的颜色为#000000~ #ffffff
+//                                             0123456789abcdef
+function getRandColor(){
+  var dict = '0123456789abcdef'
+  var str = ''
+  for(var i = 0; i < 6; i++){
+    str += dict[Math.floor(Math.random()*16)]
+  }
+  return '#' + str
+ 
+}
+var color = getRandColor()
+console.log(color)   // #a34fdb
+
+
+///////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

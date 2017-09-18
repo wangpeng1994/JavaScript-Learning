@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+  <script src="http://weather.com.cn?city=hefei&callback=showWeather"></script>
+
+  <script>
+  // 请求到的数据，类似如下结构，放在要执行的函数的参数里面
+    showWeather({
+      "city": "hefei",
+      weatheer: {xxx}
+    })
+
+  // 当数据返回到了client，由于是script标签，所以会自动当作js执行
+  </script>
+  <script>
+    function showWeather(json){ //client 这边也要配合，先声明好约定的函数 ，把函数名作为参数之一写入URL中
+      xxx
+    }
+  </script>
+
+  
+
+</body>
+</html>

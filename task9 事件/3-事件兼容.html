@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="box" id="ct" name="div">
+    <button>click me</button>
+  </div>
+  <script>
+  
+    var button = document.querySelector('button')
+    var box = document.querySelector('.box')
+    button.addEventListener('click', function(e){
+      console.log(this) //this 代表监听到有事件发生的元素 这里是 bottun节点
+      console.log(this.innerText)
+      console.log(e.target) //实际上就是button
+    })
+    box.addEventListener('click', function(e){
+      console.log(this) //this 代表监听到有事件发生的元素,这里是box 节点
+      console.log(this.innerText) // 这里还是 click me
+      console.log(e.target) // 而这里，是事件真实触发点，或者最终到达的元素
+    }) // 也就是 MouseEvent 的 target 是button 节点
+
+    // 下面是 兼容IE的写法
+    // 首先明白不同点在于， 第一个参数不同，添加事件处理程序的方法不同
+
+    // 但还是解决不了 this 的问题，具体看book jquery之父的做法
+    function addEvent(node, type, handler){
+      if(!node) return false
+      if(node.addEventListener){
+        node.addEventListener(type, handler, false)
+        return true
+      }
+      else if(node.attachEvent){
+        node.attachEvent('on' + type, handler,)
+        return true
+      }
+      return false
+    }
+    var node = document.getElementsByClassName('box')[0]
+    addEvent(node, 'click', function(){
+      console.log(e)
+      console.log(this)
+    })
+
+///////////////////////////////////////////////////////////////////////
+
+    
+// 虽然DOM和IE的event对象不同，但基于它们的相似性，我们还是可以写出跨浏览器的事件对象方案
+// getEvent() getTarget() preventDefault() stopPropagation
+
+function getEvent(e){
+  return e || window.event
+}
+
+function getTarget(e){
+  return e.target || e.srcElement
+}
+
+function preventDefault(e){
+  if(e.preventDefault)
+    e.preventDefault()
+  else
+    e.returnValue = false
+}
+
+function stopPropagation(e){
+  if(stopPropagation)
+    e.stopPropagation
+  else
+    e.cancelBubble = true
+}
+
+
+
+
+
+
+
+
+
+    
+  </script>
+
+
+</body>
+</html>

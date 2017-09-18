@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>降域演示b页面</title>
+  <style>
+    html,body {
+      margin: 0;
+    }
+    input {
+      margin: 20px;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+
+  <input id="input" type="text" placeholder="http://b.peng.com:8080/b.html">
+
+
+
+  <script>
+
+    document.querySelector('#input').addEventListener('input', function(){
+      window.parent.document.querySelector('input').value = this.value //传给爸爸
+    })
+
+    
+    
+    document.domain = "peng.com" //降域处理
+  
+  </script>
+
+</body>
+</html>

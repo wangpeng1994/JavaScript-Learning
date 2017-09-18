@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <ul class="ct">
+    <li>这里是</li>
+    <li>饥人谷</li>
+    <li>任务班</li>
+  </ul>
+  <input class="ipt-add-content" placeholder="添加内容" />
+  <div class='btn'>
+    <button id="btn-add-start">开头添加</button>
+    <button id="btn-add-end">结尾添加</button>
+  </div>
+  <script>
+    /*
+    1. 当点击按钮 开头添加 时在 <li>这里是</li> 元素前添加一个新元素，内容为用户输入的非空字符串；当点击 结尾添加 时在最后一个 li 元素后添加用户输入的非空字符串.
+    2. 当点击每一个元素li时控制台展示该元素的文本内容。
+    */
+    // 1. 创建新元素li  2. 给li里添加非空内容  3. 把新li添加到ul内指定位置
+
+    //分别绑定两个按钮
+    $('#btn-add-start').addEventListener('click', function(){
+      var newLi = document.createElement('li')
+      var ipt = $('.ipt-add-content')
+      var ct = $('.ct')
+      if(/\S/.test(ipt.value) && ipt.value !== ''){
+        newLi.innerText = ipt.value
+        ct.insertBefore(newLi, ct.firstChild)
+      }else{
+        alert('好歹输入点什么')
+      }
+    })
+    $('#btn-add-end').addEventListener('click', function(){
+      var newLi = document.createElement('li')
+      var ipt = $('.ipt-add-content')
+      var ct = $('.ct')
+      if(/\S/.test(ipt.value) && ipt.value !== ''){
+        newLi.innerText = ipt.value
+        ct.appendChild(newLi)
+      }else{
+        alert('好歹输入点什么')
+      }
+    })
+
+
+
+    // 使用了事件代理，给两个按钮安排了个爸爸
+    $('.btn').addEventListener('click', function(e){
+      var newLi = document.createElement('li')
+      var ipt = $('.ipt-add-content')
+      var ct = $('.ct')
+      var target = e.target
+      if(/\S/.test(ipt.value) && ipt.value !== ''){
+        newLi.innerText = ipt.value
+        if(target.id === 'btn-add-start'){
+          ct.insertBefore(newLi, ct.firstChild)
+        }else if(target.id === 'btn-add-end'){
+          ct.appendChild(newLi)
+        }
+      }
+    })
+    // 因为这里是绑定的button的爸爸，所以在整个爸爸范围内，如果是空的，点击都会出现弹窗,所以这里就不添加alert，除非把id判断放在外层，然后里面分别再次判断是否非空,如下面所示
+
+
+    $('.btn').addEventListener('click', function(e){
+      var newLi = document.createElement('li')
+      var ipt = $('.ipt-add-content')
+      var ct = $('.ct')
+      var target = e.target
+      if(target.id === 'btn-add-start'){
+        if(/\S/.test(ipt.value) && ipt.value !== ''){
+          newLi.innerText = ipt.value
+          ct.insertBefore(newLi, ct.firstChild)
+        }else{alert('好歹输入点什么')}
+      }else if(target.id === 'btn-add-end'){
+        if(/\S/.test(ipt.value) && ipt.value !== ''){
+          newLi.innerText = ipt.value
+          ct.appendChild(newLi)
+        }else{alert('好歹输入点什么')}
+      }
+    })
+
+
+    //  实现 当点击每一个元素li时控制台展示该元素的文本内容
+    $('.ct').addEventListener('click', function(e){
+      var target = e.target
+      if(target.tagName.toLowerCase() === 'li'){
+        console.log(target.innerText)
+      }
+    })
+
+    // 定义$选择器
+    function $(single){
+      return document.querySelector(single)
+    }
+
+
+  </script>
+</body>
+</html>

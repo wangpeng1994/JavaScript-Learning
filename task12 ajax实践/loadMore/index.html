@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>加载更多</title>
+  <style>
+    ul, li {
+      margin: 0;
+      padding: 0;
+    }
+    #ct li {
+      list-style: none;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    #ct li:hover {
+      background: pink;
+    }
+    #load-more {
+      display: block;
+      margin: 10px auto;
+      text-align: center;
+      cursor: pointer;
+    }
+    #load-more img {
+      width: 40px;
+      height: 40px;
+    }
+    .btn {
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      width: 140px;
+      border: 1px solid #aaa;
+      border-radius: 3px;
+      text-align: center;
+      text-decoration: none;
+      color: #666;
+    }
+    .btn:hover {
+      background: darkorange;
+      color:  sienna;
+    }
+  </style>
+</head>
+<body>
+  <ul id="ct"></ul>
+  <a id="load-more" class="btn" href="#">加载更多冷笑话</a>
+
+  <script>
+
+    var btn = document.querySelector('#load-more')
+    var ct = document.querySelector('#ct')
+    var pageIndex = 0
+
+    var isDataArrive = true //设计个状态锁
+
+    btn.addEventListener('click', function(e){
+      e.preventDefault() //防止点击 a 链接页面跳到顶部 或者href里 javascript:void(0)
+
+      if(!isDataArrive){ // 1. 点击按钮后，一开始先判断，如果状态是false，数据还没到来，就直接忽略
+        return;
+      }  
+        
+      var xhr = new XMLHttpRequest()
+      xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+          if(xhr.status === 200 || xhr.status === 304){
+            var results = JSON.parse(xhr.responseText) // 判断如果状态ok就获取数据
+            console.log(results) // 别着急拼装html，先看看是否能正常请求到数据
+            var fragment = document.createDocumentFragment() // 创建虚拟片段，多个li和内容处理好了，再一次性放入 fragment，最后放入DOM中，这样只渲染一次即可。
+            for( var i = 0; i < results.length; i++){
+              var node = document.createElement('li')
+              node.innerText = results[i]
+              fragment.appendChild(node)
+            }
+            ct.appendChild(fragment)
+            pageIndex += 5 // //修改序号，下次要数据就从新序号开始要
+          }else{
+          console.log('出错了')
+          }
+          isDataArrive = true // 3. 这时候接收到数据并且拼接渲染后，就可以接受再次请求
+        }
+      }
+
+      
+      //xhr.open('get', 'http://www.easy-mock.com/mock/59b95cf3e0dc663341a8fa20/example/loadMore', true)
+      xhr.open('get', '/loadMore?index='+pageIndex+'&length=5', true)
+      xhr.send()
+      isDataArrive = false // 2. 请求发出去后，把锁改为 false，因为还在等待数据返回中 
+      
+
+    })
+
+
+    /*
+    在请求数据未到来之前，如何阻止用户重复点击
+    方法1： 阻止用户重复点击，点击无效， 使用状态锁
+    方法2： 重复点击，但是最后返回的数据是对的,一开始pageIndex = -5，然后点击按钮，立刻加5
+    
+    */
+
+
+
+      
+    /*
+      前后端约定：
+    1. GET
+    2. /loadMore    /loadMore?index=0&length=5
+    3. {
+        index: 3,
+        length: 5
+       }
+    4. ['news1', 'news2'... 'news5']  
+  
+    */
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </script>
+</body>
+</html>

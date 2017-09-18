@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul class="ct">
+    <li data-img="https://android-artworks.25pp.com/fs08/2016/06/08/8/1_c7d180c964db77c4d12f875c747303f4_con.png">鼠标放置查看图片1</li>
+    <li data-img="http://android-artworks.25pp.com/fs08/2016/06/09/5/1_04723ae621322f57ccde0b6fefd5fd2a_con.png">鼠标放置查看图片2</li>
+    <li data-img="https://android-artworks.25pp.com/fs08/2016/08/31/9/102_2e3f72bbb11226e7ef2c63caa76a943a_con.png">鼠标放置查看图片3</li>
+  </ul>
+  <div class="img-preview"></div>
+  <script>
+    
+    // 题目7： 补全代码，要求：当鼠标放置在li元素上，会在img-preview里展示当前li元素的data-img对应的图片。
+
+    // 1. ul绑定mouseover事件 2. 创建img子元素，从li里获取src属性  3. 把img添加到div里
+    // 2. target绑定mouseout事件 2. 使用removeChild()方法删除子元素img
+
+    $('.ct').addEventListener('mouseover', function (e) {
+      var target = e.target
+      if (target.tagName.toLowerCase() === 'li') {
+        var img = document.createElement('img')
+        img.setAttribute('src', target.getAttribute('data-img'))
+        $('.img-preview').appendChild(img)
+      }
+      target.addEventListener('mouseout', function () {
+        $('.img-preview').removeChild(img)
+      })
+    })
+
+    function $(single) {
+      return document.querySelector(single)
+    }
+
+  </script>
+</body>
+
+</html>

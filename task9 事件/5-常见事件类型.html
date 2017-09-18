@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+
+    .box {
+      width: 100px;
+      height: 100px;
+      border: 5px solid lime;
+      margin-bottom: 10px;
+      background: pink;
+      position: relative;
+    }
+    .hover {
+      background: blue;
+    }
+    .child1 {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: red;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    .msg {
+      display: none;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="box box1"></div>
+  <div class="box box2">
+    <div class="child1"></div>
+  </div>
+  <div class="box box3"></div>
+
+  <input type="text" class="input-name">
+
+
+  <form id="form" action="/upload">
+    <input id="username" name="username" type="text">
+    <p class="msg"></p>
+    <input od="btn-submit" type="submit" value="注册">
+  </form>
+
+
+
+
+ <script>
+
+
+
+    $('.box1').addEventListener('dblclick', function(e){
+      console.log(this)
+      console.log(e.target) // 都是输出 .box 元素
+    })
+
+    // mouseover and mouseout have some bug, callback again when your mouse over&out the child,
+    // so we can use the mouseenter and mouseleave to replace above both.
+    $('.box2').addEventListener('mouseenter', function(){
+      console.log(1)
+      this.classList.add('hover')
+    })
+    $('.box2').addEventListener('mouseleave', function(){
+      console.log(2)
+      this.classList.remove('hover')
+    })
+
+            ///////////////////////    input 常见事件 ///////////////////////////
+    
+    $('.input-name').addEventListener('focus', function(){
+      console.log('获得焦点')
+      console.log(this.value)
+    })
+    $('.input-name').addEventListener('blur', function(){
+      console.log('失去焦点')
+      console.log(this.value) 
+      // 老IE this指代window，so window.event.target.value
+    })
+    $('.input-name').addEventListener('keyup', function(e){
+      this.value = this.value.toUpperCase()
+      console.log(e) 
+    }) // 当键盘松开的时候 变为大写
+
+    $('.input-name').addEventListener('change', function(e){
+      this.value = this.value.toUpperCase()
+      console.log(e)
+    }) // change事件 相当于，blur + 判断， 当失去焦点的时候，判断内容是否chaned，如果变化了，执行绑定的程序  
+
+
+
+
+
+
+/////////////////////form表单提交事件的验证,分为两种, 实时验证，和一次性点了提交再验证//////////
+
+//对form进行拦截
+
+    $('#form').addEventListener('submit', function(e){
+      e.preventDefault() //先取消事件默认行为
+      if(/^\w{6,20}$/.test($('#username').value)){
+        $('#form').submit() //符合的话，手动执行submit
+      }else{
+        $('#form .msg').innerText = '请输入6到20个字符，并且只能是字母数字或下划线'
+        //$('#form .msg').style.display = 'block'
+        ///$('#form .msg').classList.add('show')  然后在css中预先添加 .show{display:block;}
+        $('#form .msg').setAttribute('style', 'display:block')
+        //$('#form .msg').removeAttribute('style') 这个方法不行，因为本身就不是内联样式，也就无从remove
+        console.log('no submit...')
+      }
+    })
+
+
+//////////////////////// 页面滚动时间 //////////////////////////////////////
+    window.addEventListener('scroll', function(e){
+      console.log('鼠标滚动一格，会执行很多次，除非拖动滚动条，一点一点地滚动')
+    })
+
+
+
+
+
+  
+    function $(id){
+      return document.querySelector(id)
+    }
+    function $$(cls){
+      return document.querySelectorAll(cls)
+    }
+
+  </script>
+</body>
+</html>

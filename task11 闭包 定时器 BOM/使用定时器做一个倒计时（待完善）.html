@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>做一个倒计时</title>
+</head>
+<body>
+  <select id="mySelect" placeholder="选择一个时间">
+    <option value="1" selected>1分钟</option>
+    <option value="5">5分钟</option> 
+    <option value="10">10分钟</option>    
+    <option value="20">20分钟</option>   
+  </select>
+  <button id="starBtn">start</button>
+  <button id="pauseBtn" disabled>pause</button>
+    <button id="resumeBtn" disabled>resume</button>
+  <div id="outputDiv"></div>
+  
+
+
+  <script>
+  
+  var timeLeft = 10
+  var lastTimerId
+  
+  function showTime(){
+    outputDiv.textContent = timeLeft + '秒'   // 在js中如果id名称不和内置属性或全局变量重名的话，该名称自动成为window对象的属性，但还是建议用标准方法
+    if(timeLeft === 0){
+      return
+    }
+    timeLeft -= 1 //展示后立即 -1s
+    // 1s后再次展示，是用递归，showTime不断调用
+    lastTimerId = setTimeout(showTime, 1000)
+  
+  }
+  
+  starBtn.onclick = function(){
+    
+    // 获得选项值,最好转换成number在相乘
+    var valueNumber = parseInt(mySelect.value, 10)
+    var seconds = valueNumber * 60
+    timeLeft = seconds
+    
+    //如果有存在的定时器，则清除定时器
+    if(lastTimerId){
+      window.clearTimeout(lastTimerId)
+    }
+    showTime()
+    //点了start才能pause
+    pauseBtn.removeAttribute('disabled')
+  }
+  
+  pauseBtn.onclick = function(){
+    if(lastTimerId){ // 清除定时器，也就中断了递归循环
+      window.clearTimeout(lastTimerId)
+      //点了pause才能resume，同时pause变为不可点击
+      resumeBtn.disabled = false
+      pauseBtn.disabled = true
+    }
+  }
+  
+  resumeBtn.onclick = function(){
+    showTime() //打印当前时间，在下一秒打印下一秒的时间
+    pauseBtn.disabled = false
+    resumeBtn.disabled = true
+  
+  }  
+  
+  </script>
+</body>
+</html>

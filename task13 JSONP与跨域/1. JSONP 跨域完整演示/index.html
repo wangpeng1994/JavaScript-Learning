@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    .container {
+      width: 500px;
+      margin: 0 auto;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <ul class="news">
+      <li>山有木兮木有枝，心悦君兮君不知</li>
+      <li>十年生死两茫茫，不思量，自难忘</li>
+      <li>玲珑骰子安红豆，入骨相思知不知</li>        
+    </ul>
+    <button class="change">换一组</button>
+  </div>
+
+  <script>
+  
+    $('.change').addEventListener('click', function(){
+      var script = document.createElement('script')
+      script.src = 'http://127.0.0.1:8080/getNews?callback=appendHtml';
+      document.head.appendChild(script)
+      document.head.removeChild(script) //请求数据，执行后，就立即删除，script的引入标签
+    })
+
+    function appendHtml(news){
+      var html = ''
+      for(var i=0; i<news.length; i++){
+        html += '<li>' + news[i] + '</li>'
+      }
+      console.log(html)
+      $('.news').innerHTML = html
+    }
+
+    function $(selector){
+      return document.querySelector(selector)
+    }
+
+  </script>
+
+</body>
+</html>

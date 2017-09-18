@@ -1,0 +1,81 @@
+<script>  
+
+
+
+// 1、使用数组拼接出如下字符串 ，其中styles数组里的个数不定
+
+var prod = {
+    name: '女装',
+    styles: ['短款', '冬季', '春装']
+};
+function getTplStr(data){
+  var arr = []
+  arr.push('<dl class="product">')
+  arr.push('<dt>'+data.name+'</dt>')
+  for(var key in data.styles){
+    arr.push('<dd>'+data.styles[key]+'</dd>')
+  }
+  arr.push('</dl>')
+  return arr.join('')
+};
+var result = getTplStr(prod);  //result为下面的字符串
+
+// <dl class="product"><dt>女装</dt><dd>短款</dd><dd>冬季</dd><dd>春装</dd></dl>
+
+var str = 'abcdeabcdeabcdeancdeabcdeabcdeabcdea\
+ncdeabcdeabcdeabcdeancdeabcdeabcdeabcdeancde'
+
+
+
+var str = 'abcdeabcdeabcdeancdeabcdeabcdeabcdea'+
+'cdeabcdeabcdeabcdeancdeabcdeabcdeabcdeancde'
+
+
+
+//7、写一个camelize函数，把my-short-string形式的字符串转化成myShortString形式的字符串，如
+
+camelize("background-color") == 'backgroundColor'
+camelize("list-style-image") == 'listStyleImage'
+
+function camelize(str){
+  var arr = str.split('-')
+  for(var i = 1; i < arr.length; i++){
+    arr[i] = arr[i][0].toUpperCase() + arr[i].slice(1)
+  }
+  return arr.join('')
+}
+
+
+
+truncate("hello, this is hunger valley,", 10) == "hello, thi...";
+truncate("hello world", 20) == "hello world"
+
+
+function truncate(str, maxlength){
+  if(str.length > maxlength){
+    return str.slice(0, maxlength) + '...'
+  }
+  return str
+}
+
+
+
+
+
+
+
+var str5 = 'ji\\\rengu'
+
+
+console.log(str5)
+
+
+
+
+
+
+
+
+
+
+</script>

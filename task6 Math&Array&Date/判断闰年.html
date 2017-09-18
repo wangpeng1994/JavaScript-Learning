@@ -1,0 +1,47 @@
+<script>
+
+// 年数能被400整除是闰年， 2月有29天也是闰年
+
+function xxx(year){
+  var d = new Date(year,1,29) // Date 如果发现当天超出了，就顺延到下一个月
+  console.log(d.getDate())
+  return d.getDate() === 29 // 直接 return  是否等于 29 的真假性
+}
+xxx(2016) // 29 true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</script>

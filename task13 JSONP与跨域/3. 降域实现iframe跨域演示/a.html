@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>降域演示a页面</title>
+  <style>
+    .ct {
+      width: 910px;
+      margin: auto;
+    }
+    .main {
+      float: left;
+      width: 450px;
+      height: 300px;
+      border: 1px solid #ccc;
+    }
+    .iframe {
+      float: right;
+    }
+    .iframe {
+      width: 450px;
+      height: 300px;
+      border: 1px dashed #ccc;
+    }
+  
+  </style>
+</head> 
+<body>
+  
+  <div class="ct">
+    <h1>使用降域实现跨域</h1>
+    <div class="main">
+      <input type="text" placeholder="http://a.peng.com:8080/a.html">
+    </div>
+  </div>
+  <iframe src="http://b.peng.com:8080/b.html" frameborder="0"></iframe>
+
+
+  <script>
+  
+    document.querySelector('.main input').addEventListener('input', function(){
+      console.log(this.value)
+      window.frames[0].document.querySelector('input').value = this.value //传给儿子
+    })
+
+    document.domain = 'peng.com' //降域处理， B中也降到相同域名
+  
+  </script>
+
+</body>
+</html>

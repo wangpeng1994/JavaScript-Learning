@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>  
+    // 同步，就是在哪里干等着结果
+    // 异步就是知道结果要等很久，于是不等结果，让回调函数在那里等着，有结果了就通知我
+
+    function 排队取号(黄牛){   //3. 黄牛排队等待，时间到了拿到号码
+      setTimeout(function f2(){
+         黄牛("你的号码是 233")
+      }, 3000)
+    }
+  
+    function 黄牛(number){ //2. 黄牛的目的要做的事情就是拿到号码，打出来
+      console.log(number)  //4. 时间到了，黄牛把号码携带出来
+    }
+  
+    排队取号(黄牛) // 1. 异步，猴急，有急事，于是指派个黄牛去排队
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<script>
+
+  sayHello()
+  var hello = sayHello() // 这里的sayHell()没有设置return，默认返回 undefined
+
+  var a = 1;
+
+  function sayHello(){
+    console.log('hello')
+    console.log('jirengu')
+  }
+
+  //  这是函数表达式，匿名函数赋给 sayName
+  var sayName = function (){
+    console.log('wangpeng')
+  }
+
+  // 使用函数表达式，调用之前，必须先声明
+  sayName()
+
+  // 单个参数
+  function sayGoodBye(name){
+    console.log('good bye ' + name)
+  }
+  sayGoodBye('wangpeng')
+  sayGoodBye('jirengu')
+
+  // 多个参数
+
+  printInfo('wang', 5, 'boy')
+  function printInfo(name, age, sex){
+    console.log(name);
+    console.log(age);
+    console.log(sex);
+
+    console.log(arguments[0])
+  }
+
+
+  // Js 模拟其他语言的重载
+  function printPeopleInfo(name, age, sex){
+    if(name){
+      console.log(name);
+    }
+    
+    if(age){
+      console.log(age);
+    }
+
+    if(sex){
+      console.log(sex);
+    }
+  }
+
+  printPeopleInfo('wang', 26);
+  printPeopleInfo('wang', 26, 'male');
+
+
+// 函数返回值
+  function sum(a, b){
+    a++;
+    b++;
+    return a + b;
+  }
+
+  var result = sum(2, 3);
+  console.log(result);
+
+
+ // 不要return console.log，不然一直都是undefined
+  function getAge(age){
+    console.log(age)
+    return age;
+  }
+  var age = getAge(20)
+
+
+function sayHello(){
+  console.log('hello');
+}
+ 
+console.log(sayHello)
+
+
+// 声明前置
+var fn
+function fn(fn){}
+fn = 3
+console.log(fn)
+
+
+// 函数作用域,在js中（ES6之前），只有函数作用域，没有块作用域。ES6 有 let
+function fn(){
+  var a = 1;
+
+  if(a >2){
+    var b = 3;
+  }
+  console.log(b);
+}
+fn();
+console.log(a);
+
+// 等同于以下
+function fn(){
+  var a;
+  var b;
+  a = 1
+
+  if(a>2){
+    b = 3;
+  }
+  console.log(b);
+}
+fn(); // 输出 undefined
+console.log(a); // 报错，not defined，因为 a 是在函数作用域内
+
+// 求n的阶乘 n!
+function factor(n){
+  var result = 1;
+  for(var i = 1; i <= n; i++){
+    result = i*result
+  }
+  return result;
+}
+
+//5! == 5*4!
+//fn(5) == 5*fn(4)
+
+//fn(n) == n*fn(n-1)
+
+
+// 使用递归求n！
+// 递归特点，自己条用自己，设置终止条件，语法简单，效率低
+function factor(n){
+  if(n === 1) {
+    return 1
+  }
+  return n * factor(n-1)
+}
+factor(5)
+
+function sum(n){
+  if(n === 1) {
+    return 1
+  }
+  return n + sum(n-1)
+}
+sum(10)
+
+
+
+function say(){
+  var a = 1;
+  var b = 2;
+}
+
+
+
+fn();
+  var i = 10;
+  var fn = 20;
+  console.log(i);
+  function fn(){
+    console.log(i);
+    var i = 99;
+    fn2();
+    console.log(i);
+    function fn2(){
+      i = 100;
+    }
+  }
+
+
+
+
+var i;
+var fn;
+function fn(){}
+
+fn();
+
+  var i;
+  function fn2(){}
+  console.log(i); // undefined
+  i = 99;
+  
+  fn2();
+    i = 100;
+  console.log(i); // 调用了fn2() 之后， 输出 100
+
+i = 10;
+fn = 20;
+console.log(i); // 10
+
+
+
+
+
+
+function add1(i){
+  console.log('函数声明: '+(i+1))
+}
+add1(1);
+
+var add1 = function(i){
+  console.log('函数表达式： '+(i+10));
+}
+add1(1);
+
+function add1(i){
+  console.log('函数声明：'+(i+100));
+}
+add1(1);
+
+
+
+
+
+function add1(i){
+  console.log('函数声明: '+(i+1))
+}
+function add1(i){
+  console.log('函数声明：'+(i+100));
+}
+var add1
+
+
+add1(1); // xxxxx: 101
+
+add1 = function(i){
+  console.log('函数表达式： '+(i+10));
+}
+
+add1(1); // xxxx: 11
+add1(1); // xxxx: 11
+
+
+
+
+
+</script>

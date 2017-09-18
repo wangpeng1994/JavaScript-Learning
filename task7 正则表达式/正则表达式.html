@@ -1,0 +1,180 @@
+<script>
+
+
+var reg = /[^abc123]/
+var reg2 = /[0-9a-zA-Z_]/
+var reg3 = /^hello/
+
+"18556529263".match(/^1\d{10}$/g)
+// ["18556529263"]
+
+// 量词
+
+'a12345b678cde'.match(/[a-z]\d?/g)
+// ["a1", "b6", "c", "d", "e"]
+
+'a12345b678cde'.match(/[a-z]\d+/g)
+// ["a12345", "b678"]
+
+'a12345b678cde'.match(/[a-z]\d*/g)
+// ["a12345", "b678", "c", "d", "e"]
+
+
+'a12345b678cde'.match(/[a-z]\d{1,4}/g) 
+// ["a1234", "b678"] d{1,4} 最少1次，最多4次
+
+
+'123456789'.match(/\d{3,5}/g) // 量词的 贪婪模式
+// ["12345", "6789"] 
+'123456789'.match(/\d{3,5}?/g) // 量词的 非贪婪模式
+// ["123", "456", "789"]  
+
+
+
+// 分组
+
+"hellohello".match(/(hello){1,3}?/g)
+// ["hello", "hello"]
+"hellohello".match(/(hello){1,3}/g)
+// ["hellohello"]
+
+
+// 去除字符串两边空白字符  \s 空白字符
+function trim(str){
+  return str.replace(/^\s+|\s+$/g, '')
+}
+trim(' 1231ffd sdfsdf s-&*^5 ') //"1231ffd sdfsdf s-&*^5"
+
+
+function trim(str){
+
+}
+trim(' 1231ffds-&*^5 ')
+
+
+
+//////////////////////////////////////////////////////////////////////////////////
+
+// # 题目2： 写一个函数trim(str)，去除字符串两边的空白字符
+
+function trim(str){
+  return str.replace(/^\s+|\s+$/g, '')
+}
+trim(' 1231ffd sdfsdf s-&*^5 ') //"1231ffd sdfsdf s-&*^5"
+
+
+//# 题目3： 写一个函数isEmail(str)，判断用户输入的是不是邮箱
+
+function isEmail(str){
+  return /^\w\.?\w+@\w+(\.\w+)+$/.test(str)
+}
+ isEmail('wangpeng199451@gmail.com') //true
+
+
+//# 题目4： 写一个函数isPhoneNum(str)，判断用户输入的是不是手机号
+
+function isPhoneNum(str){
+  return /^1[34578]\d{9}$/.test(str)
+}
+isPhoneNum(14299092309) //true
+
+
+
+
+
+
+
+
+
+
+
+// 写一个函数isValidUsername(str)，判断用户输入的是不是合法的用户名（长度6-20个字符，只能包括字母、数字、下划线）
+function isValidUsername(str){
+  return /^\w{6,20}$/.test(str)
+}
+
+isValidUsername('wangpeng199451')
+
+
+
+
+// 写一个函数isValidPassword(str), 判断用户输入的是不是合法密码（长度6-20个字符，只包括大写字母、小写字母、数字、下划线，且至少包括两种）
+function isValidPassword(str){
+  if(!/^\w{6,20}$/.test(str)){
+    return false
+  }else if(/^[a-z]{6,20}$/.test(str)){
+    return false
+  }else if(/^[A-Z]{6,20}$/.test(str)){
+    return false
+  }else if(/^\d{6,20}$/.test(str)){
+    return false
+  }else if(/^_{6,20}$/.test(str)){
+    return false
+  }
+return true
+}
+
+
+
+function isValidPassword(str){
+  switch(true){
+    case !/^\w{6,20}$/.test(str):
+      return false 
+      // return是直接结束当前函数返回 break是直接结束当前循环返回,这里函数内只有循环，可以省略 break
+    case /^[a-z]{6,20}$/.test(str):
+      return false
+    case /^[A-Z]{6,20}$/.test(str):
+      return false
+    case /^\d{6,20}$/.test(str):
+      return false
+    case /^_{6,20}$/.test(str):
+      return false
+    default:
+      return true
+  }
+}
+isValidPassword('wangpeng')
+
+
+
+
+
+
+
+
+
+// 题目7： 写一个正则表达式，得到如下字符串里所有的颜色
+
+var re = /#[0-9a-fA-F]{6}/g
+var subj = "color: #121212; background-color: #AA00ef; width: 12px; bad-colors: f#fddee "
+console.log( subj.match(re) )  // ['#121212', '#AA00ef']
+
+
+// 题目8：下面代码输出什么? 为什么? 改写代码，让其输出[""hunger"", ""world""].
+
+var str = 'hello  "hunger" , hello "world"';
+var pat =  /".*"/g;
+str.match(pat); // 输出 [""hunger" ,hello "world""]   这里数组 length = 1
+// 因为默认是贪婪模式， .除换行回车之外的任意字符，也就包括了引号，*代表任意次数，很贪婪尽可能多的匹配，
+// 一只匹配到末尾，接着匹配正则表达式里的最后的引号 "，所以又倒着匹配，刚好第一个就是"
+
+var str = 'hello  "hunger" , hello "world"';
+var pat =  /".*?"/g;
+str.match(pat); // 输出 [""hunger"", ""world""]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

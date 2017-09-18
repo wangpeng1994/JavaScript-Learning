@@ -1,0 +1,185 @@
+<script type="text/javascript">
+
+
+
+// var x = 10
+// bar()
+
+// function foo() {
+//   console.log(x)
+// }
+// function bar(){
+//   var x = 30
+//   foo() //  输出什么
+// }
+
+ 
+// var x = 10;
+// bar() //  输出什么
+// function bar(){
+//   var x = 30;
+//   function foo(){
+//     console.log(x)
+//   }
+//   foo();
+// }
+
+
+/*
+1.
+globalContext = {
+  AO: {
+    x: 10
+    bar function(){}
+  }
+}
+
+bar.[[scrope]] = globalContext.AO
+
+2.
+barContext = {
+  AO: {
+    x: 30
+    foo: function(){}
+  },
+  Scope: bar.[[scrope]] = globalContext.AO // 继承
+}
+
+foo.[[scope]] = barContext.AO
+
+
+3.
+fooContext = {
+  AO: {},
+  Scope: foo.[[scope]] = barContext.AO
+}
+
+
+*/
+
+var a = 1;
+
+function fn(){
+  console.log(a); 
+  var a = 5;
+  console.log(a);  
+  a++;
+  var a;
+  fn3();
+  fn2();
+  console.log(a);
+
+  function fn2(){
+    console.log(a); 
+    a = 20;
+  }
+}
+
+function fn3(){
+  console.log(a)
+  a = 200;
+}
+
+fn();
+console.log(a); 
+
+/*
+
+globalContext = {
+  AO: {
+    a: 200
+    fn: function
+    fn3: function
+  }
+}
+
+fn.[[scope]] = globalContext.AO
+fn3.[[scope]] = globalContext.AO
+
+
+fnContext = {
+  AO: {
+    a: 20
+    fn2: function
+  },
+  scope: globalContext.AO
+}
+
+fn2.[[scope]] = fnContext.AO
+
+
+fn3Context = {
+  AO: {},
+  Scope: globalContext.AO // 继承
+}
+
+fn2Context = {
+  AO: {},
+  Scope:  fnContext.AO
+}
+
+
+
+
+*/
+
+// undefined 5 1 6 20 200
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

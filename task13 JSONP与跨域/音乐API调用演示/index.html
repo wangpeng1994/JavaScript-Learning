@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="referrer" content="no-referrer">
+  <title>音乐API测试</title>
+  <style>
+    html, body ,main {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+    }
+    main {
+      position: relative;
+      background: url(http://img5.web07.cn/UPics/Bizhi/2017/0106/293880060913481.jpg) center center no-repeat;
+      background-size: cover;
+      -height: 1024px;
+    }
+    .ct {
+      position: absolute;
+      width: 300px;
+      height: 332px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      box-shadow: 0 10px 18px rgba(0,0,0,0.9);
+    }
+    audio {
+      margin-top: -4px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="ct">
+      <img src="" alt="">
+      <audio src="" autoplay controls>
+        Your browser does not support the <code>audio</code> element.
+      </audio>
+    </div>
+  </main>
+<script>
+  console.log(1)
+  let xhr = new XMLHttpRequest()
+  xhr.open('get', 'http://api.jirengu.com/fm/getSong.php', true)
+  xhr.onreadystatechange = function(){
+    console.log(2)
+    if(xhr.readyState === 4 && (xhr.status == 200 || xhr.status == 304)){
+        let url = JSON.parse(xhr.responseText).song[0].url
+        let pic = JSON.parse(xhr.responseText).song[0].picture
+        console.log(url)
+        document.querySelector('audio').setAttribute('src', `${url}`)
+        console.log(document.querySelector('audio img'))
+        document.querySelector('img').setAttribute('src', `${pic}`)
+        
+        
+    }
+  }
+  xhr.send()
+
+
+ 
+</script>
+
+</body>
+</html>

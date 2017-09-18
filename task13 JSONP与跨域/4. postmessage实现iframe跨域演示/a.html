@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>postMessage跨域演示a页面</title>
+  <style>
+    .ct {
+      width: 910px;
+      margin: auto;
+    }
+    .main {
+      float: left;
+      width: 450px;
+      height: 300px;
+      border: 1px solid #ccc;
+    }
+    .iframe {
+      float: right;
+    }
+    .iframe {
+      width: 450px;
+      height: 300px;
+      border: 1px dashed #ccc;
+    }
+  
+  </style>
+</head> 
+<body>
+  
+  <div class="ct">
+    <h1>使用postMessage实现跨域</h1>
+    <div class="main">
+      <input type="text" placeholder="http://wangpeng.com:8080/a.html">
+    </div>
+  </div>
+  <iframe src="http://zhihu.com:8080/b.html" frameborder="0"></iframe>
+
+
+  <script>
+    //发送
+    document.querySelector('.main input').addEventListener('input', function(){
+      console.log(this.value)
+      window.frames[0].postMessage(this.value, '*') //把输入框的值发给儿子iframe，第二个参数指定哪些窗口能接收到消息事件，其值可以是字符串"*"（表示无限制）或者一个URI
+    })
+    //监听iframe的消息
+    window.addEventListener('message', function(e){ 
+      document.querySelector('.main input').value = e.data
+      console.log(e.data)
+    })
+    //关于postMessage 的使用，MDN文档有详细描述，已经更规范更安全的建议，本文只是做跨域的简单探讨，简化了很多细节。
+
+  
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+  <style>
+    li {
+      border: 1px solid;
+    }
+  </style>
+<body>
+<ul>
+  <li>选项1</li>
+  <li>选项2</li>
+  <li>选项3</li>
+  <li>选项4</li>
+  <li>选项5</li>
+  <li>选项6</li>
+</ul>
+  
+  <script>
+    // 所谓闭包，就是指  函数和函数内部能访问到的变量（环境）总和
+    // 闭包常常用来「间接访问一个变量」。换句话说，「隐藏一个变量」,避免全局变量的污染
+    // 暴露一个访问器（函数），让别人可以「间接访问」
+
+    // 造成这种问题的原因正是闭包，函数内引用了外部变量
+     var items = document.querySelectorAll('li')
+     //获取页面上所有li， items是一个假数组
+     for(var i = 0; i < items.length; i++){
+       items[i].onclick = function(){
+         console.log(i)
+       }
+     }
+    
+    //立即执行函数表达式，专克闭包。
+    //方法1
+     var items = document.querySelectorAll('li')
+     for(var i = 0; i < items.length; i++){
+      
+       !function(j){ //声明个函数，创建新的作用域
+         items[j].onclick = function(){// 每次循环的时候，j都是不同的值
+           console.log(j)
+         }
+       }(i) //每次循环都立即执行函数表达式，分别传入不同的i
+     }
+
+    // 以前是一个变量贯穿循环， 现在是用函数形成新的作用域，分别赋值绑定
+    
+    
+    //方法2
+     var items = document.querySelectorAll('li')
+     for(var i = 0; i < items.length; i++){
+       
+       items[i].onclick = function(j){
+         return function(){
+           console.log(j)
+         }
+       }(i)  
+     }
+
+     // 方法3 使用 let,把var 换成 let 就能达到目的，let可以创建块级作用域
+     var items = document.querySelectorAll('li')
+     for(let i = 0; i < items.length; i++){
+       items[i].onclick = function(){
+         console.log(i)
+       }
+     }
+
+  /*
+   也就是 for循环的块， 这样 i 就不再是全局作用域，而是块级作用域，for每循环一次，其块内都会生成一个块级作用域，所以4个事件处理函数，也就是console.log(i)  就绑定指向了不同的 i 。虽然 for 循环时，没有onclick事件发生, 函数不会去执行打印console.log(i), 但是一旦点击li，执行事件函数时， 假如点击了 第二个 li， 那么这里的事件绑定，实际上就是： */
+// 第二次循环时  let i = 1
+  items[1].onclick = function(){
+    console.log(1) //在绑定时已经是固定的内容，什么时候点击，都是输出 1
+  }
+
+
+
+
+
+  </script> 
+</body>
+</html>

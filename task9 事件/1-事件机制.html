@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+<button id="cancel">dianwo</button>
+
+<script>
+
+  // 相当于给onclick属性赋值，重复赋值，产生覆盖
+  var cancel = document.querySelector('#cancel')
+  cancel.onclick = function(){
+    console.log('wang peng')
+  }
+  cancel.onclick = function(){
+    console.log('sazuki')
+  }
+  
+  // 绑定事件处理程序，相当于执行函数，而函数执行多少次都可以，所以不会覆盖，而是分别打印出来，只不过两次传递了不同的参数
+  cancel.addEventListener('click', function(){
+    console.log('hello')
+  } )
+  cancel.addEventListener('click', function(){
+    console.log('HELLO')
+  })
+  // 下面是移除事件绑定
+  cancel.removeEventListener('click', function(){
+    console.log('hello')
+  }) // 注意，这样写，是没办法移除上面的绑定 打印 hello的。两个匿名函数长得一样，但完全是两个东西。
+
+  // 下面这样会报错，不能移除所有的click绑定的事件处理程序，至少两个参数，
+  // 所以如果有需要移除的事件处理程序，那么绑定的时候就不能是匿名函数
+  cancel.removeEventListener('click')
+
+</script>
+
+
+</body>
+</html>

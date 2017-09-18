@@ -1,0 +1,105 @@
+<script>
+
+
+// ES5 新增数组学习              
+// forEach 学习
+var arr = [1,2,3,4,5,3,2]
+arr.forEach(function(value, index){
+  console.log('' + value + value )
+})
+
+
+var students = [
+    {
+		name: 'ad',
+		age: 10
+
+	},
+
+    {
+		name: 'bb',
+    	age: 20
+	},
+
+    {
+		name: 'ca',
+		age: 8
+    },
+    {
+		name: 'ce',
+		age: 5
+    }
+] 
+
+var namehasc = students.filter(function(student){
+ return student.name.indexOf('c') > -1
+})
+console.log(namehasc)
+
+
+var arr = [3,4,5,6]
+
+function reduce(){
+  var result = 0
+  arr.forEach(function(value,index){
+    result += arr[index] + arr[index+1]
+
+  })
+
+}
+
+
+// 模仿 .reduce()
+
+function reduce(arr, fn, initValue){
+  var arr2 = (initValue === undefined?[]:[initValue]).concat(arr)
+  // var arr2 = arr.concat([])
+  // if(initValue !== undefined){ // 如果initValue 定义了
+  //   arr2.unshift(initValue) // 那么开头添加 initValue 元素
+  // }
+  while(arr2.length > 1){ //当数组有两个以上的值的时候
+    console.log(arr2)
+    arr2.splice(0, 2, fn(arr2[0],arr2[1])) //调用传入的fn函数，给fn传入v1，v2，也就是arr2的前两个元素
+  }
+  return arr2 // 这时候arr2只有一个元素了
+}
+
+var arr = [1, 2, 3, 4]
+// [3,3,4]
+// [6,4]
+// [10]
+var result = reduce(arr, function(v1, v2){
+  return v1 + v2
+})
+console.log(result)
+
+
+
+
+
+//  实现一个flatten函数，将一个嵌套多层的数组 array（数组） (嵌套可以是任何层数)转换为只有一层的数组，数组中元素仅基本类型的元素或数组，不存在循环引用的情况
+// 字符串开平， 饿了么，阿里 面了很多次
+
+var arr = [3, ['4,5', 7, [1]], [2, 10]]
+
+function flat(arr){
+  var arr2 = []
+  arr.forEach(function(val){ //遍历数组，对每一项进行检查
+    if(Array.isArray(val)){ //如果这个val元素值，本事就是数组
+      arr2 = arr2.concat(flat(val)) //那么，递归，继续调用flat,把结果和之前的arr2拼在一起，赋给新的arr2
+    }else{
+      arr2.push(val)
+    }
+  })
+  return arr2
+}
+
+var arr2 = flat(arr)
+console.log(arr2) // [3, '4,5', 7, 1, 2, 10]
+
+// 当然还有另外2种方法，参见视频 https://jirengu.com/app/watch/2376/1?vsum=60&fastVer=1
+
+
+
+
+</script>

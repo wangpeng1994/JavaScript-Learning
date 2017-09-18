@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+<script>  
+
+  // 下面的代码输出多少？修改代码让 fnArr[i]() 输出 i。使用 两种以上的方法
+  var fnArr = [];
+  for (var i = 0; i < 10; i ++) {
+    fnArr[i] =  function(){
+      return i; // 后面调用函数去执行的时候，这里的 i 实际上是全局的 i，已经经过了10次循环
+    };
+  }
+  console.log( fnArr[3]() );  //输出10
+
+
+  //方法1：声明个函数，创建新的作用域并立即执行，从而每次给数组fnArr赋不同的函数 
+  var fnArr = []
+  for (var i = 0; i < 10; i ++) {
+    !function(i){ // 这里的 i 只是形参，可以是任何其他名字，函数内部使用相同名字即可
+      fnArr[i] =  function(){
+        return i // 后面调用函数去执行的时候，这里的 i 实际上已经是全局的i，已经经过了10次循环
+      }
+    }(i) // 每一次循环，都会执行函数，传入的不同的 i
+  }
+  console.log( fnArr[3]() );  //输出 3
+
+
+  //方法2 使用自动执行函数，返回的是原来的函数，但自动执行函数每一次循环时传入的 i 都不一样
+  var fnArr = [];
+  for (var i = 0; i < 10; i ++) {
+    fnArr[i] =  function(i){
+      return function(){
+        return i;  //所以这里的i，在循环时传入的是什么值，五百年后打印出来还是什么值，不会自增
+      }
+    }(i)
+  }
+  console.log( fnArr[3]() ); //输出 3
+
+
+</script>
+  
+</body>
+</html>

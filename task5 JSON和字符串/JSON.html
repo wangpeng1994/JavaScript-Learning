@@ -1,0 +1,109 @@
+<script>
+
+
+
+var o = new Object
+
+var arr = [1,2,3]
+new Array(1,2,3) // 字面量，就是简化版
+
+
+var obj = { name: 'wangpeng', age: 23, sayName: function(arguments) {
+  // body
+}}   // 这种写法就是对象字面量的表示方法
+
+// 在js 里，对象是一个无序的数据的集合， json 满足这种格式，所以就是json对象
+
+var str = '{"name": "wangpeng", "age": 23}'
+var obj = JSON.parse(str)
+console.log(obj.name)
+console.log(JSON.stringify(obj)) // 转换成字符串，就可以进行传递了
+
+
+
+var obj = {
+  "name": "wangpeng",
+  "age": 30,
+  "1234": "hello"       // js 中属性可不加引号，但是非正规的名称，就要加引号
+}
+
+obj.name = "小明"
+obj.age
+obj['2345'] // 当属性名，不正规时，可以使用这种类似数组的方法，通用性地获取任何属性值
+
+
+// 属性的遍历
+
+var people = {}
+
+for(var key in people){
+  console.log(key, ":", people[key])
+}
+
+
+
+// JSON 对象可以作为字典
+// 写一个函数，得到一个字符串里出现频率最高的一个字符
+
+var str = 'hello world, wang peng haha hoho hoho hoho lol'
+// 思路：1. 打乱成数组， 对数组进行排序， 然后一样的数组连在一起，对数组进行遍历。
+// 2. 直接进行遍历
+
+var dict = {}
+for(var i = 0; i<str.length; i++){
+  if(dict[str[i]]){
+    ++dict[str[i]]
+  }else{
+    dict[str[i]] = 1 // 相当于dict 对象里面有个属性h， 值是 1
+  }
+}
+
+ // {h: 1, e: 1, l: 2, o: 2, ' ': 1, w: 1, r: 1, s...}
+ // {h: 9, e: 2, l: 5, o: 9, " ": 8, …}
+
+var count = 0
+var maxValue
+for(key in dict){
+  if(dict[key] > count){
+    maxValue = key
+    count = dict[key]
+  }
+}
+console.log(count, maxValue)
+
+
+
+// 2007-01-10    转化成   二零零七年一月十日
+
+var dict = {
+  '0':'零',
+  '1':'一',
+  '2':'二',
+  '3':'三',
+  '4':'四',
+  '5':'五',
+  '6':'六',
+  '7':'七',
+  '8':'八',
+  '9':'九',
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

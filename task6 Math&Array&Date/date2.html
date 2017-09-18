@@ -1,0 +1,70 @@
+<script>                                
+
+
+
+/*
+3、写一个函数，参数为时间对象毫秒数的字符串格式，返回值为字符串。假设参数为时间对象毫秒数t，根据t的时间分别返回如下字符串:
+
+刚刚（ t 距当前时间不到1分钟时间间隔）
+3分钟前 (t距当前时间大于等于1分钟，小于1小时)
+8小时前 (t 距离当前时间大于等于1小时，小于24小时)
+3天前 (t 距离当前时间大于等于24小时，小于30天)
+2个月前 (t 距离当前时间大于等于30天小于12个月)
+8年前 (t 距离当前时间大于等于12个月)
+*/
+
+
+function friendlyDate(time){
+  var curDate = new Date()
+  // 当前时间的毫秒级，这里的curDate是使用Date构造函数创建的实例，不需要 Date.parse(),在与毫秒参与计算的时候，也会自动转化成毫秒级，而下面的time，是外部手动传入的，如果是时间字符串，必须要解析成毫秒级，才能参与毫秒计算
+  var offset = curDate - time
+  // 这里也可以把 time 改成  Date.parse(time) ，从而函数参数变为传入日期字符串，这时候传入'1994-05-01', 能计算出，我现在距离出生已经 23年了
+  var minutes = Math.floor(offset/1000/60) 
+  var hours = Math.floor(minutes/60)
+  var days = Math.floor(hours/24)
+  var months = Math.floor(days/30)
+  var years = Math.floor(months/12)  
+  // 1年11个月29天23小时59分 ，这也是1年前， 而不是2年前，  逻辑判断上和1年0个月0天0小时0分没区别，所以之前各项取整的误差累计不影响结果
+  if(minutes < 1){
+    return '刚刚'
+  }else if( minutes >= 1 && minutes < 60 ){
+    return minutes + '分钟前'
+  }else if( hours >= 1 && hours < 24 ){
+    return hours + '小时前'
+  }else if( days >= 1 && days < 30 ){
+    return days + '天前'
+  }else if( months >=1 && months < 12 ){
+    return months + '个月前'
+  }
+  return years + '年前'
+}
+var str = friendlyDate(767750400000)
+console.log(str) // 23年前
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>tab切换</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    ul,
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tab-ct .header>li {
+      width: 50px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      border: 1px solid #ccc;
+      display: inline-block;
+      margin-right: -5px;
+      border-right: none;
+      cursor: pointer;
+    }
+
+    .tab-ct .header>li:last-child {
+      border-right: 1px solid #ccc;
+    }
+
+    .tab-ct .header>li.active {
+      background: #a5daa6;
+    }
+
+    .tab-ct .content>li {
+      width: 149px;
+      height: 100px;
+      border: 1px solid #ccc;
+      background: #f5daa6;
+      border-top: none;
+      padding: 10px;
+      display: none;
+    }
+
+    .tab-ct .content>li.active {
+      display: block;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="tab-ct">
+    <ul class="header">
+      <li class="active">tab1</li>
+      <li>tab2</li>
+      <li>tab3</li>
+    </ul>
+    <ul class="content">
+      <li class="active">我是tab1内容</li>
+      <li>我是tab2内容</li>
+      <li>我是tab3内容</li>
+    </ul>
+  </div>
+
+
+  <script>
+    var tabs = document.querySelectorAll('.tab-ct .header>li')
+    var panels = document.querySelectorAll('.tab-ct .content>li')
+
+    // for(var i = 0; i < tabs.length; i++){
+    //   tabs[i].addEventListener('click', function(){
+    //     console.log(this)
+    //   })
+    // }
+
+    tabs.forEach(function(tab){ //使用遍历，给tabs 里的 每一个tab （li） 绑定事件
+      tab.addEventListener('click', function(){
+        tabs.forEach(function(node){ //遍历的时候，每一次，先再来个遍历，去除所有的active class
+          node.classList.remove('active')
+        }) // this之外， 还可以是e.target  window.event.target
+        this.classList.add('active') // 然后给当前的tab添加active
+
+        // 接下来，点击header 里面的li，如何对应上 content里面的li
+        // 这就需要知道点击的是第几个li，有两种方法：
+        // this 看索引号 ， 获得数组循环对比
+        var index = [].indexOf.call(tabs, this) //找到当前li的index
+        panels.forEach(function(node){ //同上，先去除content里面所有li的active class
+          node.classList.remove('active')
+        })
+        panels[index].classList.add('active') //给与tab对应的content li添加active
+      })
+    })
+
+    // 注意点
+    // 1. 数组遍历要熟练， 2. classList操作要熟练 3. 绑定事件
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+</body>
+
+</html>

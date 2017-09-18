@@ -1,0 +1,112 @@
+<script>
+
+
+while(1){
+  console.log('hello')
+}
+
+var i = 10;
+while(i > 0){
+  console.log(i)
+  i--;
+}
+
+var i = 4;
+do{
+  console.log(i);
+  i--;
+}while(i > 1);
+
+for(var i = 10; i > 0; i--){
+    console.log(i);
+}
+
+正序遍历数组并打印出来
+var arr = [100, 80, 70 ,45]
+for(var i = 0; i < arr.length; i++){
+  console.log(arr[i])
+}
+
+倒序遍历数组打印出来
+var arr = [100, 90, 80, 70, 60]
+for(var i = arr.length - 1; i >= 0; i-- ){
+  console.log(arr[i])
+}
+
+正序遍历偶数序位的数组
+var arr = [100, 90, 80, 70, 60, 50, 40]
+for(var i = 1; i < arr.length; i += 2){
+  console.log(arr[i])
+}
+
+遍历并打印数组的平方
+var arr = [3, 4, 5]
+for(i = 0; i<arr.length; i++){
+  console.log(arr[i]*arr[i])
+}
+
+var obj = {
+  name: 'wangpeng', 
+  age: 30
+}
+
+for(var key in obj){
+  console.log(obj[key])
+}
+
+for-in 也能遍历数组，但是不建议，还是用for比较好
+var arr = [100, 50, 2, 234]
+for(var i in arr){
+  console.log(arr[i])
+}
+
+// for-in 用来遍历并枚举对象属性和值
+var obj = {
+ name: 'hunger', 
+ sex: 'male', 
+ age: 28 
+}
+for( var key in obj ){
+  console.log(key+':'+obj[key])
+}
+
+
+var d = 5;
+var data = d ==5 && console.log('bb')
+console.log(data)
+
+
+
+
+
+
+
+function filterPositive(arr){
+  for(var i = 0; i < arr.length; i++){
+    if( typeof arr[i] !== 'number' || arr[i] <= 0 ){
+      arr.splice(i,1)
+      i--
+    }
+  }
+}
+var arr = [3, -1,  2,  '饥人谷', true]
+filterPositive(arr)
+console.log(arr) //[3,  2]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

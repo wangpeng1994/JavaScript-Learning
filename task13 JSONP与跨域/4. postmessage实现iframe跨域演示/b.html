@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>postMessage跨域演示b页面</title>
+  <style>
+    html,body {
+      margin: 0;
+    }
+    input {
+      margin: 20px;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+
+  <input id="input" type="text" placeholder="http://zhihu.com:8080/b.html">
+
+
+
+  <script>
+    //发送
+    document.querySelector('#input').addEventListener('input', function(){
+      window.parent.postMessage(this.value, '*') //把输入框的值发给parent
+    })
+    //监听parent的消息
+    window.addEventListener('message', function(e){
+      document.querySelector('#input').value = e.data
+      console.log(e.data)
+    })
+    
+  
+  </script>
+
+</body>
+</html>

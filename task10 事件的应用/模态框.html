@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .modal-dialog {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:rgba(0,0,0,0.7);
+    }
+
+    .modal-dialog .bt {
+      display: inline-block;
+      padding: 3px 6px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+
+    .modal-dialog a {
+      text-decoration: none;
+      color:deepskyblue;
+    }
+    /* 下面的cover，是为了展示整个modal，所添加的cover，上面的区别在于，没有display: none; 
+    这里提供参考，在css最末尾用了个较为简单明了的方法，可以满足目前的简单需求 */
+    /* .modal-dialog .cover {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #000;
+      opacity: 0.5;
+      z-index: 99;
+    } */
+    .modal-dialog .modal-ct {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #fff;
+      z-index: 100;
+    }
+    .modal-dialog .modal-ct .header {
+      position: relative;
+      height: 36px;
+      line-height: 36px;
+      border-bottom: 1px solid #ccc;
+    }
+    .modal-dialog .modal-ct .header h3 {
+      margin: 0;
+      padding-left: 10px;
+      font-size: 16px;
+    }
+    .modal-dialog .modal-ct .header .close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      line-height: 1;
+    }
+    .modal-dialog .modal-ct .content {
+      padding: 10px;
+    }
+    .modal-dialog .modal-ct .footer {
+      padding: 10px;
+      border-top: 1px solid #eee;
+    }
+    .modal-dialog .modal-ct .footer:after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+    .modal-dialog .modal-ct .footer .btn {
+      float: right;
+      margin-left: 10px;
+    }
+
+    .open {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="btn-group">
+    <button id="btn-modal">点我1</button>
+  </div>
+
+  <div id="modal-1" class="modal-dialog">
+    <div class="modal-ct">
+      <div class="header">
+        <h3>我是标题1</h3>
+        <a href="#" class="close">x</a>
+      </div>
+      <div class="content">
+        <p>我是第一段</p>
+        <p>我是第二段</p>
+      </div>
+      <div class="footer">
+        <a href="#" class="btn btn-confirm">确定</a>
+        <a href="#" class="btn btn-cancel">取消</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var btn = document.querySelector('#btn-modal'),
+      modal = document.querySelector('#modal-1'),
+      modalCt = document.querySelector('#modal-1 .modal-ct'),
+      close = document.querySelector('#modal-1 .close'),
+      btnConfirm = document.querySelector('.btn-confirm'),
+      btnCancel = document.querySelector('.btn-cancel')
+
+    btn.addEventListener('click', function(){ //默认模态框隐藏，现在要展示 加clas或操作style(最好前者 比如加个open)
+      modal.classList.add('open')
+    })
+
+    // 声明一个事件处理函数，以便 x  确定 取消， 都能绑定相同的操作
+    function handler(){
+      modal.classList.remove('open')
+    }
+
+    close.addEventListener('click', handler)
+    btnConfirm.addEventListener('click', handler)
+    btnCancel.addEventListener('click', handler)
+
+    // 现在希望点击模态框以外的，也能消失
+    modal.addEventListener('click', function(){
+      modal.classList.remove('open')
+    })
+    // 但是点击到里面的 ct容器，会向上冒泡，从而也会隐藏modal，所以需要取消事件冒泡
+    modalCt.addEventListener('click',function(e){
+      e.stopPropagation()
+    })
+  </script>
+
+</body>
+</html>
