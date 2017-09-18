@@ -44,7 +44,7 @@
 <script>
   console.log(1)
   let xhr = new XMLHttpRequest()
-  xhr.open('get', 'http://api.jirengu.com/fm/getSong.php', true)
+  xhr.open('get', 'https://jirenguapi.applinzi.com/fm/getSong.php', true)
   xhr.onreadystatechange = function(){
     console.log(2)
     if(xhr.readyState === 4 && (xhr.status == 200 || xhr.status == 304)){
