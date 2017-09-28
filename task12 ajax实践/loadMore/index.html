@@ -60,7 +60,7 @@
     btn.addEventListener('click', function(e){
       e.preventDefault() //防止点击 a 链接页面跳到顶部 或者href里 javascript:void(0)
 
-      if(!isDataArrive){ // 1. 点击按钮后，一开始先判断，如果状态是false，数据还没到来，就直接忽略
+      if(!isDataArrive){ // 1. 点击按钮后，一开始先判断，如果状态是false，数据还没到来，就直接忽略 ,以防止重复点击
         return;
       }  
         

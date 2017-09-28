@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>跨域限制演示</title>
+</head>
+<body>
+  <h1>我是晓风残月</h1>
+  <button>点我发送ajax请求</button>
+  <script>
+    document.querySelector('button').onclick = function(){
+      var xhr = new XMLHttpRequest()
+      xhr.open('GET', 'http://zhihu.com/getNews', true)
+      xhr.onload = function(){
+
+        console.log(JSON.parse(xhr.responseText))
+      }
+      xhr.send()
+    }
+  
+  </script>
+</body>
+</html>

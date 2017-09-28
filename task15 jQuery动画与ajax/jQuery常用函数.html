@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    <script>
+      $(document).ready(function(){   //对比DOMContentLoaded
+        //do something
+      })
+      $().ready(function(){ //jQuer的默认参数是：“document”
+        //do something
+      })
+      $(function(){
+        //do something
+      })
+
+    </script>
+
+  </head>
+  <body>
+    <input id="ipt1" type="text" value="hello" sex="boy">
+    <div class="box">
+      <ul>
+        <li>1</li>
+        <li class="a">2</li>
+        <li class="a">3</li>
+        <li class="a active">4</li>
+      </ul>
+    </div>
+    <button id="btn">变色</button>
+    <script>
+    
+    
+    $('.box>ul>li').each(function(idnex, node){  //第二个参数是原生js对象
+      // var str = $(node).text()
+      // $(node).text(str+str)
+      
+      console.log(this) //this 就是第二个参数，即原生dom对象
+      var str = $(this).text()
+      $(this).text(str + str)
+
+      //console.log(arguments)
+      //node.innerText = node.innerText + node.innerText
+    })
+
+    var arr = $('.box>ul>li').map(function(){
+      return $(this).text()
+    })
+    console.log(arr) //  返回包含新的jQuery对象 ["11", "22", "33", "44"]
+    
+    //$.extend方法，扩展对象
+    var obj1 = {a:1}
+    var obj2 = {b:2, c:3}
+    var obj3 = {b:3, d:5}
+    var obj4 = {}
+    $.extend(obj1, obj2)  //obj1 === {a:1, b:2 ,c:3} obj2扩展到obj1中
+    // $.extend(obj1, obj2, obj3) //obj1 === {a:1, b:3, c:3, d:5} obj2和obj3扩展到obj1中
+    // $.extend(obj4, obj1, obj2, obj3)  //为了保持obj1不改变，新建个obj4，把obj1 obj2 obj3扩展到obj4中
+    // var obj5 = $.extend({}, obj1, obj2, obj3) //与上面类似，换了种写法，直接扩展到空对象里，最后赋值给obj5
+
+
+
+
+
+
+    </script>
+  </body>
+</html>

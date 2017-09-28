@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>绑定事件演示</title>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+  <div class="box">
+    <ul>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+    </ul>
+  </div>
+  <input id="ipt" type="text">
+  <button id="btn">添加</button>
+  <div id="wrap"></div>
+
+  <script>
+    // $('.box>ul>li').on('click', function(){ //点击每个li时，把li文本内容展示在下方div中
+    //   var str = $(this).text() //this是原生DOM中的，这里使用jQuery的方法前，要转化一下
+    //   $('#wrap').text(str)
+    // })
+
+    // $('.box>ul>li').click(function(){ //简写方法
+    //   var str = $(this).text()
+    //   $('#wrap').text(str)
+    // })
+    
+
+    $('.box>ul').on('click', 'li', {name: 'wangpeng'}, function(e){ 
+      console.log(e.data)
+      //e.stopPropagation()
+      //e.preventDefault()
+      console.log('haha')
+    })
+
+    //使用事件代理，否则新添加的li，没有绑定事件
+    $('.box>ul').on('click.hello', 'li', function(e){ //点击每个li时，把li文本内容展示在下方div中
+      console.log(e.target)
+      console.log(this) //这里的this，和原生不一样，再这里还是指代 li，因为有第二个参数的存在
+      var str = $(this).text() //this是原生DOM中的，这里使用jQuery的方法前，要转化一下
+      // var str = this.innerText //这是原生
+      $('#wrap').text(str)
+    })
+
+    $('#btn').on('click', function(){
+      var value = $('#ipt').val() //使用jq方法 val 获取input 的值
+      $('.box>ul').append('<li>'+ value +'</li>') //拼接成 li 放在ul里的最后面
+    })
+
+    //$('.box>ul').off('click.hello') //命名空间的作用，为了解绑对应的事件，做区分
+    //$('.box>ul').off('click') //如何这样写，所有的 对应ul的事件绑定，都会取消绑定
+  
+  </script>
+
+</body>
+</html>

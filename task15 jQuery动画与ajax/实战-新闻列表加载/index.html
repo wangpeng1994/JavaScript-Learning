@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>加载更多</title>
+  <style>
+    html,body,h2,p,ul,li {
+      margin: 0;
+      padding: 0;
+    }
+    a{
+      color: #333;
+      text-decoration: none;
+    }
+
+    .ct {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .item {
+      margin-top: 20px;
+      list-style: none;
+    }
+    .item .thumb img {
+      width: 50px;
+      height: 50px;
+    }
+    .item .thumb {
+      float: left;
+    }
+    .item h2 {
+      margin-left: 60px;
+      font-size: 14px;
+    }
+    .item p {
+      margin-left: 60px;
+      font-size: 14px;
+      margin-top: 10px;
+      color: #ccc;
+    }
+    .load-more {
+      margin-top: 20px;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="ct">
+    <ul class="news">
+      <!-- <li class="item">
+        <a href="https://xw.qq.com/cmsid/MIL2017092701403603">
+          <div class="thumb">
+            <img src="https://inews.gtimg.com/newsapp_bt/0/2098930994/1000">
+          </div>
+          <h2>中国都建第二艘航母了 却还没造出这种船</h2>
+          <p>技日报北京9月26日电 （记者陈瑜）“雪龙2”号...</p>
+        </a>
+      </li>
+      <li class="item"></li> -->
+    </ul>
+    <button class="load-more">加载更多</button>
+  </div>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+    var pageIndex = 0
+
+    $('.load-more').click(function(){
+      $.get('/getNews',{page:pageIndex}).done(function(ret){
+        if(ret.status === 0){
+          appendHtmls(ret.data)
+          pageIndex++
+        }else{
+          alert('获取新闻失败')
+        }
+      }).fail(function(){
+        console.log('系统异常')
+      })
+    })
+    
+
+
+    /* 约定数据类型
+      [
+        {
+          link: '',
+          img: '',
+          title: '',
+          brif: ''
+        },
+        {...}
+      ]
+
+      {
+        p: 0, //0-4
+      }
+      p: 1, //5-9
+
+    */
+
+    function appendHtmls(news){
+      if(news.length === 0){
+        $('.load-more').remove()
+        $('.ct').append('<p>no more news</p>')
+        return
+        }
+      var htmls = ''
+      $.each(news, function(){
+        htmls += `
+        <li class="item">
+          <a href="${this.link}">
+            <div class="thumb">
+              <img src="${this.img}">
+            </div>
+            <h2>${this.title}</h2>
+            <p>${this.brif}</p>
+          </a>
+        </li>`
+      })
+      $('.news').append(htmls)
+    }
+
+
+  
+  </script>
+</body>
+</html>

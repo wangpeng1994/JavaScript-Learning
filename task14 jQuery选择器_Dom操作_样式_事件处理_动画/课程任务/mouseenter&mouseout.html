@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <meta charset="utf-8">
+  <title>鼠标滑入滑出演示</title>
+  <style>
+    ul, li {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      box-sizing: border-box;
+    }
+    a {
+      text-decoration: none;
+    }
+    
+    .tabs {
+      width: 200px;
+      background: #c7171e;
+    }
+    .tabs>li {
+      position: relative;
+      height: 40px;
+      line-height: 40px;
+      font-size: 15px;
+      color: #fff;
+      text-indent: 10px;
+      padding: 0 0px 0 10px;
+      border-bottom: 1px dotted #de272e;
+    }
+    .tabs>li:last-child {
+      border-bottom: none;
+    }
+    .tabs>li>:first-child {
+      padding-right: 95px;
+      cursor: pointer;
+    }
+    .tabs .details a {
+      color: #333;
+      font-size: 12px;
+    }
+  
+    .tabs .details {
+      position: absolute;
+      width: 215px;
+      left: 200px;
+      top: 0px;
+      border: 1px solid #bbb;
+      display: none;
+    }
+    .tabs .details li {
+      width: 50%;
+      height: 37px;
+      line-height: 37px;
+      float: left;
+      padding-left: 10px;
+    }
+  
+  </style>
+</head>
+<body>
+  <ul class="tabs">
+    <li>
+      <span>珠宝玉器</span>
+      <span>></span>
+      <ul class="details aaa"></ul>
+    </li>
+    <li>
+      <span>珠宝玉器</span>
+      <span>></span>
+      <ul class="details"></ul>
+    </li>
+    <li>
+      <span>珠宝玉器</span>
+      <span>></span>
+      <ul class="details"></ul>
+    </li>
+    <li>
+      <span>珠宝玉器</span>
+      <span>></span>
+      <ul class="details"></ul>
+    </li>
+    <li>
+      <span>珠宝玉器</span>
+      <span>></span>
+      <ul class="details"></ul>
+    </li>
+  </ul>
+  
+  <script>
+    var products = ['翡翠','玉石','宝石','水晶','玛瑙','珍珠','钻石','琥珀','和田','琥珀']
+
+    function makeDetail(){ //先封装一个details数据生成器
+      for(let i=0; i<arguments.length; i++){
+        for(let j=0; j<arguments[i]; j++){
+          $('.tabs>li:nth-child('+(i+1)+')>.details').append('<li><a href="#">'+products[j]+'</a></li>') //或者使用模板字符串 `${}`
+        }
+      }  
+    }
+
+    makeDetail(10,6,4,6,4) //终于可以愉快的填入数据了 = =！
+
+    //绑定鼠标滑入/滑出事件，在鼠标介入之前，css中已设置 display: none;
+    $('.tabs>li').on('mouseenter', function(){
+      $(this).children('.tabs .details').show()   
+    })
+    $('.tabs>li').on('mouseleave', function(){
+      $(this).children('.tabs .details').hide()
+    })
+  </script>
+</body>
+</html>

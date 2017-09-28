@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jsonp请求演示</title>
+</head>
+<body>
+  <h1>我是晓风残月</h1>
+  <button>点我构造script请求</button>
+  <ul class="news">
+    <!-- <li></li> -->
+  </ul>
+  <script>
+
+    /* 只要服务器开启后，哪怕file协议打开html文件，依然可以请求到 */
+
+    document.querySelector('button').onclick = function(){
+      var script = document.createElement('script')
+      script.src = 'http://zhihu.com/getNews?callback=appendHtml'
+      document.head.appendChild(script)
+      document.head.removeChild(script)
+    }
+
+    function appendHtml(news){
+       var html = ''
+       for(var i = 0; i < news.length; i++){
+         html += '<li>' + news[i] + '</li>'
+       }
+       document.querySelector('.news').innerHTML = html
+    }
+  
+  </script>
+</body>
+</html>

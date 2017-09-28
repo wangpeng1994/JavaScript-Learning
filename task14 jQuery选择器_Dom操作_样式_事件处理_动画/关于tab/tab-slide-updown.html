@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <meta charset="utf-8">
+  <title>tab-slide-updown</title>
+  <style>
+    .mod-tab {
+      border: 1px solid #ccc;
+      margin-top: 30px;
+    }
+    .mod-tab * {
+      box-sizing: border-box;
+    }
+    .mod-tab ul,
+    .mod-tab li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .mod-tab ul.tabs {
+      display: flex;
+      justify-content: center;
+    }
+    .mod-tab .tabs li {
+      width: 33.33%;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+
+      cursor: pointer;
+    }
+    .mod-tab .tabs li:last-child {
+      border-right: none;
+    }
+  
+    .mod-tab .tabs li.active {
+      background: lightblue;
+    }
+
+    .mod-tab .panels {  /* 限制父容器高度，以便隐藏多余的 */  
+      height: 200px;
+      overflow: hidden;
+    }
+    .mod-tab .panels > li {
+      height: 200px;
+      padding: 20px;
+      background: pink;
+      position: relative;  /*后面用js控制 li 的top，即可滚动*/
+    }
+    .mod-tab .panels > li:nth-child(2) {
+      background: orange;
+    }
+    .mod-tab .panels > li:nth-child(3) {
+      background: seagreen;
+    }  
+  
+  </style>
+</head>
+<body>
+  <div class="mod-tab">
+    <ul class="tabs">
+      <li class="active">tab1</li>
+      <li>tab2</li>
+      <li>tab3</li>
+    </ul>
+
+    <ul class="panels">
+      <li>内容1 just do it！</li>
+      <li>内容2 make it happen！</li>
+      <li>内容3 nothing is impossible！</li>
+    </ul>
+  </div>
+
+  <script>
+    $('.tabs>li').on('click', function(){
+      var $this = $(this)
+      var index = $this.index()//返回相对于同辈元素位置的索引值
+      var panelHeight = parseInt($('.mod-tab .panels').css('height')) // 为了以后动态，故不要直接200，200px ===> 200
+      //或者 var panelHeight = $('.mod-tab .panels').height() // 200
+      console.log(panelHeight)
+      $this.addClass('active').siblings().removeClass('active')
+      $this.parents('.mod-tab').find('.panels li').animate({top: -panelHeight*index})
+    })
+    
+    /* 
+    
+    思路： 
+    1. 书写 HTML 
+    2. 书写 CSS，利用addClass 和 removeClass 作切换
+    3. 如何保持内容区 和 tab 联动呢，要用到 jQuery中的 index() 获得当前 tab（li） 的index
+    4. 利用animate动画，以及 li相对定位 + top，动态改变top值，达到滚动效果
+
+
+
+
+
+
+
+
+
+    左右滚动，就要定义容器宽度，然后内容要浮动排列
+    */
+
+
+
+
+    
+    
+    
+  </script>
+</body>
+</html>

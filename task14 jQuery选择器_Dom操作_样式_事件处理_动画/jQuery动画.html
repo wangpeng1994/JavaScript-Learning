@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      background: red;
+      position: relative;
+    }
+    .ct .item {
+      list-style: none;
+      border: 1px solid #666;
+    }
+    .ct .item p {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="btn-box1">fadeOut</button>
+  <button id="btn-box2">fadeIn</button>
+  <button id="btn-box3">攒劲的动画</button>
+  <button id="btn-box4">finish</button>
+  <button id="btn-box5">stop</button>
+  
+  <div class="box"></div>
+
+  <div class="ct">
+    <ul>
+      <li class="item">
+        <h3>标题1</h3>
+        <p>内容1</p>
+      </li>
+      <li class="item">
+        <h3>标题2</h3>
+        <p>内容2</p>
+      </li>
+      <li class="item">
+        <h3>标题3</h3>
+        <p>内容3</p>
+      </li>
+      <li class="item">
+        <h3>标题4</h3>
+        <p>内容4</p>
+      </li>
+    </ul>
+  </div>
+
+  <script>
+  
+  $('#btn-box1').on('click', function(){
+      $('.box').fadeToggle(3000)
+      //$('.box').slideUp(3000)
+  })
+
+  $('#btn-box2').on('click', function(){
+      $('.box').fadeIn(3000)
+      //$('.box').slideDown(3000)
+  })
+
+  // 连续的自定义动画
+  $('#btn-box3').click(function(){
+    let actions = [
+      {width:'200px', height:'200px'},
+      {left:'200px'},
+      {top:'200px'},
+      {left:0},
+      {top:0},
+      {width:'100px', height:'100px'}
+    ]
+    actions.forEach(function(action){
+      $('.box').animate(action, 1000)
+    })
+  })
+ 
+  //  以上也可以使用链式调用，  $('.box').hide().show().css() jQuery 的链式调用， 每次调用执行完毕后继续返回jQuery对象
+
+  $('#btn-box4').on('click', function(){
+    $('.box').finish() //停止当前正在运行的动画，删除所有排队的动画，并完成匹配元素所有的动画
+  })
+
+  $('#btn-box5').on('click', function(){
+    $('.box').stop(true, true) //停止匹配元素当前正在运行的动画
+  })
+
+
+  // 百叶窗效果
+  $('.ct .item').on('click', function(){
+    $(this).find('p').slideToggle()  //find 是所有匹配的内部后代元素，不只是子元素
+    $(this).siblings().children('p').slideUp() // siblings 是所用兄弟元素 children 只是直接子元素
+  })
+  
+
+
+
+
+  </script>
+</body>
+</html>

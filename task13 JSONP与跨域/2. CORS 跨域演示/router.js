@@ -15,7 +15,7 @@ app.get('/getNews', function(req, res){
   for(var i=0; i<3; i++){
     var index = parseInt(Math.random()*news.length)
     data.push(news[index])
-    news.splice(index, 1) //为了避免随机到重复元素，所以push完一个就删除当前
+    news.splice(index, 1) //为了避免随机到重复元素，所以push完一个就删除一个
   }
 
   res.header('Access-Control-Allow-Origin', 'http://wangpeng.com:8080')

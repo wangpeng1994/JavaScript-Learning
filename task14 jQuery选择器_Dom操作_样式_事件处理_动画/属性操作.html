@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+    .active {
+      background: red;
+    }
+    #btn {
+      width: 100px;
+      height: 50px;
+    }
+  
+  </style>
+</head>
+<body>
+  <input id="ipt1" type="text" value="hello" sex="boy">
+  <div class="box"></div>
+  <button id="btn">点俺</button>
+  
+  <script>
+  
+    console.log($('#ipt1').val())
+  
+    var $box =  $('.box')
+    var $btn = $('#btn')
+    
+    $box.css({height: '30px', border: '1px solid red'})
+    //$box.css('background', 'yellow')
+    // 原生写法：box.style.backgroundColor = 'blue'
+    $btn.on('click', function(){
+      //$box.toggleClass('active')
+      if($box.hasClass('active')){
+        $box.removeClass('active')
+      }else{
+        $box.addClass('active')
+      }
+    })
+
+
+    
+
+
+  </script>
+</body>
+</html>

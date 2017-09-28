@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+  
+  <script>
+
+    //传统方法
+    $.ajax({
+      url: '/hello',
+      method: 'get',
+      dataType: 'json',
+      data: {
+        a: 1,
+        b: 2
+      },
+      success: function(ret){
+        console.log(ret)
+      },
+      error: function(){
+
+      }
+    })
+
+    //写法2
+    $.ajax({
+      url: '/hello',
+      method: 'post',
+      dataType: 'json',
+      data: {
+        a: 1,
+        b: 2
+      }
+    }).done(function(ret){
+
+    })
+
+    //简写
+    $.get('/hello', {}).done(function(ret){
+      console.log(ret)
+    })
+
+    $.get('/hello', {name: "wangpeng", age: 23})
+      .done(function(ret){
+        console.log(ret)
+      }).fail(function(ret){
+        console.log('error')
+      })
+
+    $.post('/comment', {comment: "这里是晓风残月"})
+      .done(function(ret){
+        console.log(ret)
+      }).fail(function(){
+        console.log('error')
+      })
+
+  
+  
+  
+  
+  </script>
+
+
+</body>
+</html>

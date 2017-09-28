@@ -35,7 +35,7 @@
 <body>
   <main>
     <div class="ct">
-      <img src="" alt="">
+      <img src="">
       <audio src="" autoplay controls>
         Your browser does not support the <code>audio</code> element.
       </audio>
@@ -51,11 +51,9 @@
         let url = JSON.parse(xhr.responseText).song[0].url
         let pic = JSON.parse(xhr.responseText).song[0].picture
         console.log(url)
-        document.querySelector('audio').setAttribute('src', `${url}`)
+        document.querySelector('audio').setAttribute('src', url)
         console.log(document.querySelector('audio img'))
-        document.querySelector('img').setAttribute('src', `${pic}`)
-        
-        
+        document.querySelector('img').setAttribute('src', pic)   
     }
   }
   xhr.send()

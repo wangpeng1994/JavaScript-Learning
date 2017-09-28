@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+  <style>
+    ul, li {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    
+    .mod-tab {
+      width: 702px;
+      color: #666;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+    .mod-tab * {
+      box-sizing: border-box;
+    }
+
+    
+    .mod-tab .panels .items {
+      width: 700px;
+      display: none;
+      
+    }
+    .mod-tab .panels .items ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-content: space-between;
+    }
+    
+    .mod-tab .panels .items li {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+
+    .mod-tab .panels img {
+      max-height: calc(100% - 70px);
+    }
+    .mod-tab .panels p {
+      position: absolute;
+      bottom: 30px;
+      height: 35px;
+      padding: 0 20px;
+      margin: 0;
+      text-align: left;
+    }
+    .mod-tab .panels span {
+      position: absolute;
+      bottom: 10px;
+      display: block;
+      padding-left: 20px;
+      font-size: 13px;
+      color: #dd0000;
+      text-align: left;
+    }
+    
+    .mod-tab .panels .items.active {
+      display: block
+    }
+    
+    .mod-tab .buy {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      background: rgba(0,0,0,0.4);
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      opacity: 0;
+    }
+    .mod-tab .buy a {
+      display: block;
+      width: 70px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      color: #dd0000;
+      font-size: 12px;
+      background: #fff;
+      text-decoration: none;
+      border: 1px solid #dd0000;
+      border-radius: 3px;   
+    }
+
+    .mod-tab .add {
+      width: 55px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      color: #dd0000;
+      border: 1px solid #dd0000;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  
+  </style>
+</head>
+<body>
+  <div class="mod-tab">
+    <h1>珠光宝气</h1>
+    <ul class="panels">
+      <li class="items active">
+        <ul>
+          <li>
+            <div class="buy">
+              <a href="#">立即抢购</a>
+            </div>
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1506076428985&di=70a247a3af6398883e9644986c846a0f&imgtype=0&src=http%3A%2F%2Fimagefile.n21.cc%2F2014%2F6%2F17%2F20146171402990555522_51.jpg">
+            <p>藏美千足镶玉路路通戒指</p>
+            <span>￥1699.00</span>
+          </li>
+          <li>
+            <div class="buy">
+              <a href="#">立即抢购</a>
+            </div>
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1506076428985&di=70a247a3af6398883e9644986c846a0f&imgtype=0&src=http%3A%2F%2Fimagefile.n21.cc%2F2014%2F6%2F17%2F20146171402990555522_51.jpg">
+            <p>藏美千足镶玉路路通戒指</p>
+            <span>￥1699.00</span>
+          </li>
+          <li>
+            <div class="buy">
+              <a href="#">立即抢购</a>
+            </div>
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1506076428985&di=70a247a3af6398883e9644986c846a0f&imgtype=0&src=http%3A%2F%2Fimagefile.n21.cc%2F2014%2F6%2F17%2F20146171402990555522_51.jpg">
+            <p>藏美千足镶玉路路通戒指</p>
+            <span>￥1699.00</span>
+          </li>
+          <li>
+            <div class="buy">
+              <a href="#">立即抢购</a>
+            </div>
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1506076428985&di=70a247a3af6398883e9644986c846a0f&imgtype=0&src=http%3A%2F%2Fimagefile.n21.cc%2F2014%2F6%2F17%2F20146171402990555522_51.jpg">
+            <p>藏美千足镶玉路路通戒指</p>
+            <span>￥1699.00</span>
+          </li>
+          <li>
+            <div class="buy">
+              <a href="#">立即抢购</a>
+            </div>
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1506076428985&di=70a247a3af6398883e9644986c846a0f&imgtype=0&src=http%3A%2F%2Fimagefile.n21.cc%2F2014%2F6%2F17%2F20146171402990555522_51.jpg">
+            <p>藏美千足镶玉路路通戒指</p>
+            <span>￥1699.00</span>
+          </li>
+          <li>
+            <div class="buy">
+              <a href="#">立即抢购</a>
+            </div>
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1506076428985&di=70a247a3af6398883e9644986c846a0f&imgtype=0&src=http%3A%2F%2Fimagefile.n21.cc%2F2014%2F6%2F17%2F20146171402990555522_51.jpg">
+            <p>藏美千足镶玉路路通戒指</p>
+            <span>￥1699.00</span>
+          </li>          
+        </ul>
+      </li>     
+    </ul>
+
+    <div class="add">添加</div>
+  </div>
+
+  <script>
+    var products = [
+      {
+        img: 'http://img10.360buyimg.com/N3/jfs/t2242/92/1446546284/374195/9196ac66/56af0958N1a723458.jpg',
+        name: '珂兰 黄金手 猴哥款',
+        price: '￥405.00'
+      },{
+        img: 'http://img10.360buyimg.com/N3/jfs/t2242/92/1446546284/374195/9196ac66/56af0958N1a723458.jpg',
+        name: '珂兰 黄金转运珠 猴哥款',
+        price: '￥100.00'
+      },{
+        img: 'http://img10.360buyimg.com/N3/jfs/t2242/92/1446546284/374195/9196ac66/56af0958N1a723458.jpg',
+        name: '珂兰 黄金手链 3D猴哥款',
+        price: '￥45.00'
+      }
+    ];
+
+    // 绑定鼠标滑入/滑出事件, 使用事件代理，以便新增的元素依然有效果
+    $('.mod-tab .panels .items').on('mouseenter', 'li', function(){
+      //console.log($(this))
+      $(this).children('.buy').stop(true, false) ////取消排队执行,并完当前遗留
+      $(this).children('.buy').animate({opacity: '1'}, 250)
+    })
+
+    $('.mod-tab .panels .items').on('mouseleave', 'li', function(){
+      $(this).children('.buy').stop(true, false)
+      $(this).children('.buy').animate({opacity: '0'}, 250)
+    })
+
+    //绑定按钮添加事件
+    $('.mod-tab .add').on('click', function(){
+      products.forEach(function(e){
+        let $li = $('.mod-tab .panels .items ul li').eq(0).clone()
+        $li.children('img').attr('src', `${e.img}`)
+        $li.children('p').text(`${e.name}`)
+        $li.children('span').text(`${e.price}`)
+        $li.appendTo('.mod-tab .panels .items ul')
+      })
+    })
+  </script>
+
+</body>
+</html>

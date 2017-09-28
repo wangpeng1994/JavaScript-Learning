@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jQuery ajax加载更多</title>
+  <style>
+    .ct > * {
+      padding: 0;
+      margin: 0;
+    }
+    .ct .news li {
+      height: 40px;
+      line-height: 40px;
+      padding-left: 15px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+    .ct .news li.hover {
+      color: #fff;
+      background: #008000;
+    }
+    .ct .load-more {
+      display: block;
+      height: 40px;
+      width: 80px;
+      color: lightcoral;
+      font-size: 15px;
+      margin: 0 auto;
+      border: 1px solid lightcoral;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      outline: none;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="ct">
+    <ul class="news">
+      <li>内容1</li>
+      <li>内容2</li>
+    </ul>
+    <button class="load-more">更多精彩</button>
+  </div>
+
+
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+    var index = 3
+    var length = 5
+    var lock = true
+    $('.ct .news').on('mouseenter', 'li', function(){
+      $(this).addClass('hover')
+    })
+    $('.ct .news').on('mouseleave', 'li', function(){
+      $(this).removeClass('hover')
+    })
+
+    $('.ct .load-more').on('click', function(){
+      if(lock === false){
+        return;
+      }else{
+        lock = false
+        $('.ct .load-more').text('加载中')
+        $.get('/getNews', {start:index, len: length}).done(function(ret){
+          console.log(ret)
+          appendHtmls(ret)
+          lock = true
+          $('.ct .load-more').text('更多精彩')
+          index += length
+        }).fail(function(){
+          alert('网络异常')
+        })
+      }
+    })
+
+    /*  ['内容1', '内容2', '内容3'...]   */
+
+    function appendHtmls(news){
+      var htmls = ''
+      $.each(news, function(){
+        htmls += '<li>' + this + '</li>'
+      })
+      $('.ct .news').append(htmls)
+    }
+
+
+  </script>
+</body>
+</html>
