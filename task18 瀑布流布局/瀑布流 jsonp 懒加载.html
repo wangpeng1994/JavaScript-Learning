@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>瀑布流jsonp懒加载</title>
+  <style>
+    html, body, ul, li, p, div {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    ul, li {
+      list-style: none;
+    }
+
+    .wrap {
+      width: 900px;
+      margin: 0 auto;
+    }
+
+    .clearfix:after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+    #pic-ct {
+      position: relative;
+    }
+    #pic-ct .item {
+      position: absolute; /* item绝对定位是实现 waterfall 的关键 */
+      padding: 0 0 10px 0;
+      width: 280px;
+      margin: 10px;
+      border: 1px solid #dfdfdf;
+      background: #fff;
+      opacity: 0;
+      transition: all 1s
+    }
+    #pic-ct .item img {
+      margin: 10px;
+      width: 260px;
+    }
+    #pic-ct .item .header {
+      height: 25px;
+      margin: 0 12px;
+      border-bottom: 1px solid #dbdbdb;
+    }
+    #pic-ct .intro {
+      font-size: 12px;
+      line-height: 1.8;
+      margin: 10px 15px 0;
+      color: #777371;
+    }
+    .hide {
+      display: none;
+    }
+
+    #load {
+      visibility: hidden;
+      height: 20px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="ct-waterfall">
+      <ul id="pic-ct" class="clearfix">
+        <!-- <li class="item">
+          <a href="#" class="link">
+            <img src="http://n.sinaimg.cn/tech/transform/20170928/IBKo-fymkwwk6525674.jpg" alt="">
+          </a>
+          <h4 class="header">标题</h4>
+          <p class="intro">
+            当地时间2017年3月1日，在东部与亲俄武装作战中受伤的乌克兰士兵接受海豚治疗。
+          </p>
+        </li> -->
+
+        <!-- 用于动态计算 item 宽度和列数，以后css中宽度改变，没有写死，会重新计算，但不展示出来 -->
+        <li class="item hide"></li>
+      </ul>
+      <div id="load">看不见我，我是底部埋藏的dom节点，用来判断是否滚动到底部</div>
+
+    </div>
+  </div>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+  //1. 获取数据
+  //2. 把数据变为DOM，通过瀑布流的方式放到页面上
+  //3. 当页面滚动到底部的时候， 跳回执行第一步
+
+  var curPage = 1
+  var perPageCount = 10
+  var colSumHeight = []
+  var nodeWidth = $('.item').outerWidth(true) //节点宽度
+  var colNum = parseInt($('#pic-ct').width()/nodeWidth)
+  for(var i = 0; i < colNum; i++){ //初始化数组，全部为0
+    colSumHeight[i] = 0
+  }
+
+  var clock
+  var isDataArrive = true  // 第一步
+  
+  start() //初次加载先执行一次，之后受滚动事件来触发
+
+  function start(){
+    getData(function(newsList){ //请求是异步的，因此必须等数据到来之后，执行回调函数才能处理数据
+      console.log(newsList)
+      isDataArrive = true  //第三步 只有数据到来后，再更改为 true
+      $.each(newsList, function(idx, news){ //把后端返回的数组数据，变为html节点
+        var $node = getNode(news)
+        $node.find('img').on('load', function(){ //保证图片已经加载了,才能使用waterfall，不然放置后，无法更新正确高度
+          $('#pic-ct').append($node) //即使append到容器里了，但是opacity: 0 所以也是看不见的
+          console.log($node, 'loaded...')
+          waterFallPlace($node)
+        })
+      })
+    })
+    isDataArrive = false   //第二步 发送完请求后，立即 false，防止重复发送
+  }
+
+
+  $(window).scroll(function(){
+    if(clock){ //如果clock定时器存在，就立刻清除，除非500ms内，不再滚动，定时器才得以触发
+      clearTimeout(clock)
+    }
+    clock = setTimeout(function(){
+      if(!isDataArrive) return; //如果数据没到，忽略滚动
+      if(isVisible($('#load'))){
+        start()
+      }
+    }, 500)
+  })
+
+
+
+  // $(window).scroll(function(){
+  //   if(!isDataArrive) return; //如果数据没到，忽略滚动
+
+  //   if(isVisible($('#load'))){
+  //     start()
+  //   }
+  // })
+
+
+  // http://platform.sina.com.cn/slide/album_tech?jsoncallback=func&app_key=1271687855&num=3&page=4
+  function getData(callback){
+    $.ajax({
+      url: ' http://platform.sina.com.cn/slide/album_tech',
+      dataType: 'jsonp',
+      jsonp: 'jsoncallback',
+      data: {
+        app_key: '1271687855',
+        num: perPageCount,
+        page: curPage
+      }
+    }).done(function(ret){
+      if(ret && ret.status && ret.status.code === '0'){
+        callback(ret.data)
+        curPage++
+      }else{
+        console.log('get error data')
+      }
+    })
+  }
+
+  function getNode(item){
+    var htmls = `
+      <li class="item">
+        <a href="${item.url}" class="link">
+          <img src="${item.img_url}" alt="">
+        </a>
+        <h4 class="header">${item.short_name}</h4>
+        <p class="intro">${item.short_intro}</p>
+      </li>
+    `
+    return $(htmls) //返回成jQuery对象
+  }
+
+  function waterFallPlace($node){
+    //var minSumHeight = Math.min.apply(null, colSumHeight)
+    //var idx = colSumHeight.indexOf(minSumHeight)
+    var idx = 0
+    var minSumHeight = colSumHeight[0] //先赋值一下，以便下面的查找最小值算法中，第一次都是0，if不成立，也应该有个初值，也就是第一个li放置的初始位置
+    
+    for(var i = 0; i < colSumHeight.length; i++){
+      if(colSumHeight[i] < minSumHeight){
+        idx = i;
+        minSumHeight = colSumHeight[i]
+      }
+    }
+    $node.css({
+      left: nodeWidth*idx, //这里体现了dom中，放置一个display: none　的 li 的方便性
+      top: minSumHeight, //或者 colSumHeight[idx]
+      opacity: 1 //使用瀑布流放好一个li，就把这个li透明度改为1
+    })
+
+    colSumHeight[idx] += $node.outerHeight(true)
+    $('#pic-ct').height(Math.max.apply(null, colSumHeight)) //将数组最高的高度设置为容器高度，因为内部li绝对定位，容器会塌陷，我们预先埋入的底部load节点就会永远可见
+  }
+
+  function isVisible($el){
+    var scrollTop = $(window).scrollTop(),
+        windowHeight = $(window).height(),
+        top = $el.offset().top;
+
+    if(top < scrollTop + windowHeight + 100){ //可以提前100px加载
+      return true
+    }else{
+      return false
+    }
+  }
+
+
+  </script>
+
+</body>
+</html>

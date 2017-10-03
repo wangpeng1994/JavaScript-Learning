@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>渐变轮播</title>
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+    .carousel {
+      position: relative;
+      width: 320px;
+      height: 220px;
+    }
+
+    .carousel ul,
+    .carousel li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    /* 关键是li绝对定位 */
+    .carousel .img-ct > li {
+      position: absolute;
+    }
+    .carousel .img-ct img {
+      width: 320px;
+      height: 220px;
+      display: none;
+    }
+
+
+    .carousel .arrow {
+      position: absolute;
+      top: 50%;
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      margin-top: -15px;
+      border: 1px solid #fff;
+      border-radius: 50%;
+      line-height: 30px;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+    }
+    .carousel .arrow:hover {
+      opacity: 0.6;
+    }
+    .carousel .pre {
+      left: 10px;
+    }
+    .carousel .next {
+      right: 10px;
+    }
+
+    .carousel .bullet {
+      position: absolute;
+      bottom: 5px;
+      width: 100%;
+      text-align: center;
+      font-size: 0;
+    }
+    .carousel .bullet > li {
+      display: inline-block;
+      width: 30px;
+      height: 10px;
+      margin: 0 3px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .carousel .bullet > li.active {
+      background: #ccc;
+    }
+  
+  
+  
+  </style>
+
+</head>
+<body>
+  <div class="carousel">
+    <ul class="img-ct">
+      <li><a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/2.jpg"></a></li>
+      <li><a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/3.jpg"></a></li>
+      <li><a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/4.jpg"></a></li>
+      <li><a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/5.jpg"></a></li>
+    </ul>
+    <a class="pre arrow" href="#"><</a>
+    <a class="next arrow" href="#">></a>
+    <ul class="bullet">
+      <li class="active"></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+
+  <script>
+    /* 
+      思路：
+      不需要clone首尾img，一开始只有第一张是可见的，其余都是透明的，使用js改变图片透明度
+     */
+
+    var $imgCt = $('.img-ct')
+    var $imgs = $('.carousel .img-ct li img')
+    var $preBtn = $('.carousel .pre')
+    var $nextBtn = $('.carousel .next')
+    var $bullets = $('.carousel .bullet li')
+    var imgCount = $imgCt.children().length
+
+    var curIdx = 0
+    var pageIndex = 0
+    var isAnimate = false
+
+    play(0) //全都img都是 display: none ，然后载入js后，立即执行第0个切换，也就是从空白淡入
+    autoPlay()
+    
+
+    $nextBtn.click(function(){
+      playNext()
+    })
+    $preBtn.click(function(){
+      playPre()
+    })
+    $bullets.click(function(){
+      var idx = $(this).index() //当前被点击的li所处顺序
+      play(idx)
+    })
+
+
+    function playNext(){
+      play((curIdx+1)%imgCount)
+    }
+    function playPre(){
+      play((imgCount+curIdx-1)%imgCount)
+    }
+    function play(idx){
+      if(isAnimate) return; //防止过快重复点击
+      isAnimate = true
+      $imgs.eq(curIdx).fadeOut(500)  //淡出当前
+      $imgs.eq(idx).fadeIn(500, function(){ //淡入指定
+        isAnimate = false
+      })
+      curIdx = idx
+      setBullet()
+    }
+
+    function setBullet(){
+      $bullets.removeClass('active').eq(curIdx).addClass('active') //这里的curIdx已经变了
+    }
+
+
+    function autoPlay(){
+      clock = setInterval(function(){
+        playNext()
+      }, 2000)
+    }
+    function stopAuto(){
+      clearInterval(clock)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+</body>
+</html>

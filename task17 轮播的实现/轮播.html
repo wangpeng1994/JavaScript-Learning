@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>轮播</title>
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <style>  
+
+    /* 这个就是最外层窗口 */
+    .carousel {
+      position: relative;
+      width: 320px;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .carousel ul,
+    .carousel li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    /* 这里可以用after清除浮动，或者父容器生成BFC，以便包裹内部浮动元素 */
+    .carousel .img-ct {
+      position: absolute;
+      /* width: 1280px;  宽度不要写死，用js计算，因为后面要clone*/ 
+      overflow: hidden;
+    }
+    .carousel .img-ct>li {
+      float: left;
+    }
+    .carousel .img-ct img {
+      width: 320px;
+      height: 220px;
+    }
+
+    .carousel .arrow {
+      position: absolute;
+      top: 50%;
+      margin-top: -15px;
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid #fff;
+      line-height: 30px;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+    }
+    .carousel .arrow:hover {
+      opacity: 0.6;
+    }
+    .carousel .pre {
+      left: 10px;
+    }
+    .carousel .next {
+      right: 10px;
+    }
+
+    .carousel .bullet {
+      position: absolute;
+      bottom: 5px;
+      width: 100%;
+      text-align: center;
+      font-size: 0;
+    }
+    .carousel .bullet>li {
+      display: inline-block;
+      width: 30px;
+      height: 10px;
+      margin: 0 3px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .carousel .bullet>li.active {
+      background: #ccc;
+    }
+
+
+  
+  </style>
+</head>
+
+<body>
+  
+  <div class="carousel">
+    <ul class="img-ct">
+      <li data-id=0><a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/2.jpg"></a></li>
+      <li data-id=1><a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/3.jpg"></a></li>
+      <li data-id=2><a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/4.jpg"></a></li>
+      <li data-id=3><a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/5.jpg"></a></li>
+    </ul>
+    <a class="pre arrow" href="#"><</a>
+    <a class="next arrow" href="#">></a>
+    <ul class="bullet">
+      <li class="active"></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+
+
+  <script>
+    /* 
+    1. 克隆头和尾
+    2. 得到克隆后有多少个li
+    3. 得到元素宽度
+    
+    */
+    var $imgCt = $('.img-ct')
+    var $imgs = $('.carousel .img-ct > li') //这里缓存的对象，不会改变
+    var $preBtn = $('.carousel .pre')
+    var $nextBtn = $('.carousel .next')
+    var $bullets = $('.carousel .bullet li')
+
+    var pageIndex = 0 //需要个变量来保存当前页数
+    var isAnimate = false  //定义一个锁，防止动画还没完成的重复点击，如果当前动画没完成，return 不理
+
+    var imgCount = $imgs.length //img数量
+    var imgWidth = $imgs.width() //img宽度
+
+
+    $imgCt.append($imgs.first().clone())
+    $imgCt.prepend($imgs.last().clone())
+    $imgCt.width((imgCount + 2) * imgWidth)
+    $imgCt.css({left: -imgWidth}) //由于新增了img，所以目前展示的是新增的，而计划中的img在第二位，故需调整一格
+
+    $nextBtn.click(function(){
+      playNext(1)//滚动一格，抽象一下,为了清晰明了
+    })
+    $preBtn.click(function(){
+      playPre(1)
+    })
+
+    $bullets.click(function(){
+      var index = $(this).index() //当前被点击的li所处顺序
+      if(index > pageIndex){
+        playNext(index - pageIndex) //当前pageIndex 是0 ，点击了index是3， 所以3 - 0 = 3，执行三次
+      }else if(index < pageIndex){
+        playPre(pageIndex - index)
+      }
+    })
+
+
+
+  
+    function playNext(len){ //传入参数是滚动几格
+      if(isAnimate) return;
+      isAnimate = true
+      console.log(isAnimate)
+      $imgCt.animate({  //原先 left: '-=' + imgWidth
+        left: '-=' + len*imgWidth  //left 已经在上面变成了 -320px， 这里每次点击，必须累加才行 left = left - imgWidth
+      }, function(){
+        pageIndex += len   
+        if(pageIndex === imgCount){
+          pageIndex = 0 //如果pageIndex到达了4（图片数量），则立即pageIndex变为0,同时回到初始化的时候第一张图片
+          $imgCt.css({left: -imgWidth}) //从clone img 转化为亲生的img，肉眼看不出来
+        }
+        console.log(pageIndex)
+        setBullet()
+        isAnimate = false
+      })
+    }
+    function playPre(len){
+      if(isAnimate) return;
+      isAnimate = true
+      $imgCt.animate({
+        left: '+=' + len*imgWidth
+      }, function(){
+        pageIndex -= len
+        if(pageIndex === -1){ // 如果第一张，再往前，则此时立即跳到3，即 imgCount - 1
+          pageIndex = imgCount - 1
+          $imgCt.css({left: -imgCount*imgWidth})
+        }
+        setBullet()
+        isAnimate = false
+      })
+    }
+
+    function setBullet(){
+      console.log('woshi bullet')
+      $bullets.removeClass('active').eq(pageIndex).addClass('active') //先去除所有的class，然后给与pageIndex对应的元素添加 active
+    }
+
+  
+    //最后如果想实现自动轮播， setInterval(function(){playNext(1)}, 2000)
+  
+  </script>
+
+
+
+
+  
+
+</body>
+</html>

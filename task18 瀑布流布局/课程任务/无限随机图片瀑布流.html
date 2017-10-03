@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>随机图片瀑布流</title>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+    .ct {
+      position: relative;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .item {
+      position: absolute;
+      width: 200px;
+      margin: 5px;
+      opacity: 0;
+      transition: all 1s;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    #load {
+      visibility: hidden;
+      height: 20px;
+    }
+  
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <ul class="ct">
+      <!-- <li class="item"><img src="https://unsplash.it/200/250?random" alt=""></li> -->
+  
+      <!-- 用于动态计算 item宽度，visibility: hidden -->
+      <li class="item hide"></li>
+    </ul>
+    <div id="load">看不见我，我是底部埋藏的DOM节点，用来判断是否滚动到底部</div>
+  </div>
+
+  <script>
+
+    $('.wrap').width($(window).width()-30) //之所以要加 wrap，就是解决加载过程中，滚动条出现时，可能会导致屏幕宽度改变，引起重新瀑布流
+
+    //这是用来动态计算第一次应该展示多少元素，此后每次滚动加载，都加载一倍数量的图片
+    var nodeWidth = $('.item').outerWidth(true)
+    var horizontal = parseInt( $(window).width() / nodeWidth )
+    var vertical = parseInt( $(window).height() / nodeWidth )
+    var count = horizontal*vertical + vertical
+
+    var colSumHeight = []
+    var imgWidth = $('.item').width()
+
+    var clock
+
+    getResult(count)
+
+    //这里不需要做 isDataArrive 的判断，因为不是挨个向后端请求数据，再等待数据返回，而是在html拼装时，一次性拼装多个img标签，设置不同的src，可以说是瞬间完成的
+    function getResult(num){
+      var arrItem = getItem(num)
+      console.log(arrItem)
+      /*  这里的遍历是为了配合waterFallPlace中的resize实现，而做的遍历。这里的遍历保证了下面img onload 事件是加载一个img，onload后，就执行一次waterFallPlace，而waterFallPlace中用了遍历，所以新数据‘到来’后，waterFallPlace也会去遍历不断地对比不断增大的数组，把元素放置在预定位置。因此getItem故意返回了数组，目的是单独append item，并且单独waterfall每个 item。 如果不这样，图片就会全部加载后，一次性waterFallPlace，元素会加载出来后，闪烁跳动着去瀑布流布局，这不是我们在加载时希望看到的 */
+      $.each(arrItem, function(idx, item){ //遍历数组每一项（这里的数组不是后端返回的，而是拼装DOM时，顺便放进了数组里）
+        console.log($(item)) 
+        $(item).find('img').on('load', function(){
+          $('.ct').append($(item)) //append单个item
+          waterFallPlace() //waterfall单个item
+        })
+      })
+    }
+
+    $(window).scroll(function(){
+      if(clock){
+        clearTimeout(clock)
+      }
+      clock = setTimeout(function(){
+        if(isVisible($('#load'))){
+          getResult(count)
+        }
+      }, 500)
+    })
+
+    $(window).resize(function(){ //resize功能正常
+      $('.wrap').width($(window).width()-30) //这里窗口改变尺寸后，需要再次设置wrap宽度
+      waterFallPlace()
+    })
+
+    function getItem(num){
+      var arrItem = []
+      for(var i = 0; i < num; i++){
+        var randomQuery = Math.random()
+        var imgHeight = imgWidth/4 + 50*Math.floor(1 + Math.random()*5)
+        var item = `
+            <li class="item">
+              <img src="https://unsplash.it/${imgWidth}/${imgHeight}?random&${randomQuery}" alt="">
+            </li>
+          `
+          arrItem.push(item)
+      }
+        return arrItem
+    }
+
+    function waterFallPlace(){
+      var colNum = parseInt( $('.wrap').width()/nodeWidth )
+      for(var i = 0; i < colNum; i++){
+        colSumHeight[i] = 0
+      }
+      //console.log(colSumHeight)
+      $('.item').each(function(){ //这里遍历的意义在于，保证 resize 重新调整窗口大小后，每一项item 会重新对比找寻正确位置
+        var minSumHeight = Math.min.apply(null, colSumHeight)
+        var idx = colSumHeight.indexOf(minSumHeight)
+
+        $(this).css({
+          top: minSumHeight,
+          left: nodeWidth*idx,
+          opacity: 1
+        })
+        colSumHeight[idx] += $(this).outerHeight(true)
+        $('.ct').height(Math.max.apply(null, colSumHeight))
+      })
+    }
+
+    function isVisible($el){
+      var scrollTop = $(window).scrollTop(),
+          windowHeight = $(window).height(),
+          top = $el.offset().top;
+      if(top < scrollTop + windowHeight + 100){ //可以提前100px加载
+        return true
+      }else{
+        return false
+      }
+    }
+
+  </script>
+
+</body>
+</html>

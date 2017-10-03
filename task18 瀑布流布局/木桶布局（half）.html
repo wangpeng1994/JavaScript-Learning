@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>木桶布局</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    header {
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    header input {
+      width: 220px;
+      padding: 5px;
+      outline: none;
+    }
+
+    main {
+      margin: 10px;
+    }
+
+    main::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+
+    main>figure {
+      float: left;
+      padding: 5px;
+    }
+
+    main>figure img {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <input id="search-ipt" placeholder="enter picture name" type="text">
+  </header>
+  <main>
+    <!-- <figure>
+      <img src="https://cdn.pixabay.com/photo/2015/03/12/17/57/buddha-670573_150.jpg" alt="">
+    </figure> -->
+  </main>
+
+
+  <script>
+
+    /*   地狱回调  */
+    // getData('beijing', function(data){   // 注意这里 data和getData 里面构造url 参数的 data对象不是一个东西，这里是异步请求到的数据
+    //   console.log(data)
+    //   getData('beijing', function(data){
+    //     console.log(data)
+    //     getData('beijing', function(data){   
+    //       console.log(data)
+    //     })
+    //   })
+    // })
+
+    var mainNode = document.querySelector('main')
+    var mainNodeWidth = parseFloat(getComputedStyle(mainNode).width)
+    var baseHeight = 200
+
+    var rowList = []  //一行的数组 图片到了判断 newWidth + rowTotalWidth <= mainNodeWidth? 放入数组: 开始数组放入页面，清空数组，一切重新开始
+    var rowTotalWidth = 0
+
+
+    getData('beijing') //getData函数返回的是promise对象，promise对象有 then这个方法
+      .then(render)    //then() 中传入的函数，就是getData返回的promise对象 中传入函数的第一个reslove
+      .catch(function(err){ //catch传入的函数，就是 对应的 reject
+        console.log(err)
+      })
+
+    function render(data){  //木桶布局 核心思路
+      data.hits.forEach(function(imgInfo){
+        imgInfo.newHeight = baseHeight //给遍历出的图片对象，增加些新的属性
+        imgInfo.newWidth = baseHeight*imgInfo.webformatWidth/imgInfo.webformatHeight //等比例小学算法
+        
+        if(imgInfo.newWidth + rowTotalWidth > mainNodeWidth){ //判断是否放不下
+          imgInfo.newHeight = mainNodeWidth / rowTotalWidth * baseHeight
+          imgInfo.newWidth = imgInfo.webformatWidth / imgInfo.webformatHeight * imgInfo.newHeight
+          layout(rowList) //放不下的时候，上一行就开始绘制了
+          rowList = [imgInfo] //(重置) 接着另起一行，把刚才上一行放不下的图片，放入rowList
+          rowTotalWidth = imgInfo.newWidth //(重置) 新一行的总宽度，也成了第一张的宽度
+        }else{ //放得下
+          rowList.push(imgInfo)
+          rowTotalWidth += imgInfo.newWidth
+        }
+        console.log(imgInfo)
+      })
+
+      layout(rowList, baseHeight) //遍历完了，再执行一次layout，因为最后一行放不满的时候，不会触发绘制。这里传入baseHeight，以免为了宽度铺满，可能导致的高度过大
+      rowList = []     //最后清空这两个
+      rowTotalWidth = 0
+    }
+
+    // totalWidth/200 = mainNodeWidth / ?  =====>>>>  ? =  mainNodeWidth / totalWidth * 200 
+    function layout(list, Height){ //把 rowTotalWidth 传进来
+      list.forEach(function(imgInfo){
+        var figureNode = document.createElement('figure')
+        var imgNode = document.createElement('img')
+        imgNode.src = imgInfo.webformatURL
+        figureNode.appendChild(imgNode)
+        if(height){  //如果传入第二个height参数，说明是为了绘制最后一行，不至于图片过大，所以需要指定高度，而宽度需要根据原始图片比例，重新等比缩放计算
+          figureNode.style.height = height + 'px'
+          figureNode.style.width = imgInfo.webformatWidth / imgInfo.webformatHeight * height + 'px'
+        }else{ //如果没有第二个参数，说明是非最后一行的正常绘制，高度是图片新高度，宽度是图片新宽度 （新宽高在调用layout之前，已经计算好了）
+          figureNode.style.height = newHeight + 'px'
+          figureNode.style.width = imgInfo.newWidth + 'px'
+        }
+        
+        mainNode.appendChild(figureNode)
+      })
+      
+
+    }
+
+
+
+
+
+    //函数改写成promise ，就要 return 出 promise对象
+    function getData(keyword){
+      return new Promise(function(resolve, reject){
+        var data = {                                     // 1. 把要拼接的url参数放在data对象里
+            key: '6612339-216b8614e231bd269ed5ef01c',
+            q: keyword,
+            image_type: 'photo',
+            per_page: 20
+        }
+        var url = 'https://pixabay.com/api/?'
+        for(var key in data){                      // 2. 遍历枚举data对象， 拼接url
+          url += key + '=' + data[key] + '&'
+        }
+        url = url.substr(0, url.length - 1)
+
+        var xhr = new XMLHttpRequest()             // 使用ajax发送请求
+        xhr.open('GET', url, true)
+        xhr.send()
+        xhr.onload = function(){
+          if(this.status >= 200 && this.status < 300 || this.status == 304){
+            var json = JSON.parse(this.responseText)
+            //console.log(json)
+            resolve(json)  //成功就执行resolve
+          }
+          xhr.onerror = function(){
+            reject('ajax error')  //失败就执行reject
+          }
+        }         
+          
+      })
+    }
+
+      
+
+
+    /*
+    function getData(keyword, page, callback){
+      var data = {                                     // 1. 把要拼接的url参数放在data对象里
+        key: '6612339-216b8614e231bd269ed5ef01c',
+        q: 'keyword',
+        image_type: 'photo',
+        per_page: 20
+      }
+      var url = 'https://pixabay.com/api/?'
+      for(var key in data){                      // 2. 遍历枚举data对象， 拼接url
+        url += key + '=' + data[key] + '&'
+      }
+      url = url.substr(0, url.length - 1)
+
+      var xhr = new XMLHttpRequest()             // 使用ajax发送请求
+      xhr.open('GET', url, true)
+      xhr.send()
+      xhr.onload = function(){
+        if(this.status >= 200 && this.status < 300 || this.status == 304){
+          var json = JSON.parse(this.responseText)
+          console.log(json)
+          callback(json)  // 请求是异步的过程， 等数据到来后，回调传入的 callback
+        }
+      }
+    }
+    */
+
+
+
+  </script>
+
+</body>
+
+</html>

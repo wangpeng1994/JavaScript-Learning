@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://kejian.jirengu.com/static/js/jquery-1.11.1.min.js"></script>
+
+  <meta charset="utf-8">
+  <title>图片懒加载-简单</title>
+  <style>
+    ul,li{
+      list-style:none;
+    }
+    .container{
+      width: 600px;
+      margin: 0 auto;
+    }
+    .container li{
+      float: left;
+      margin: 10px 10px;
+    }
+    .container li img{
+      width: 240px;
+      height: 180px;
+    }
+    p{
+      float: left;
+    }
+  </style>
+</head>
+<body>
+<ul class="container">
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/1.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/2.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/3.jpg" /></a></li>
+  <li><a href="#"><img id=a src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/4.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/5.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/6.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/7.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/8.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/9.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/10.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/11.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/12.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/13.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/14.jpg" /></a></li>
+  <li><a href="#"><img id=b src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/15.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/16.jpg" /></a></li>
+
+</ul>
+
+<script type="text/javascript">
+
+/*
+1. 对于所有的 img 标签，把真实的地址放入自定义属性 data-img
+2. 当滚动页面时，检查页面所有的img标签， 看这个标签是否出现在我们的视野，
+   当出现在我们的视野时，再去判断它是否已经加载过， 如果还没有加载，则加载它
+*/
+
+//先做一次判断
+lazyRender()
+
+//滚动的时候再做一次判断
+var clock
+$(window).on('scroll', function(){
+  if(clock){            //每次过快地滚动，都会清除产生的N个定时器，只有停下来，稍等会，最后一个定时器才能生效，
+    clearTimeout(clock) //否则在此期间，又去滚动，会再次清除
+  }
+  clock = setTimeout(function(){ //滚动事件触发时，过300ms再执行
+    console.log(1)
+    lazyRender()
+  }, 300)
+  
+})
+
+
+function lazyRender(){
+  $('.container img').each(function(){
+    if( checkShow($(this)) && !isLoaded($(this)) ){ //判断是否 已经出现在视窗中，但还没有被加载过
+      loadImg($(this))
+    }
+  })
+}
+
+function checkShow($img){
+  var scrollTop = $(window).scrollTop() //滚动过去的高度
+  var windowHeight = $(window).height() //窗口的高度
+  var offsetTop = $img.offset().top     //元素距离文档顶部的高度
+
+  if(offsetTop < scrollTop + windowHeight && offsetTop > scrollTop){ //这里的判断，具体情况具体对待，可以进行像素加减
+    return true
+  } //上面的return 省了个else， 条件成立直接结束函数
+  return false
+}
+
+function isLoaded($img){
+  return $img.attr('data-src') === $img.attr('src')
+}
+
+
+function loadImg($img){
+  $img.attr('src', $img.attr('data-src'))
+}
+
+
+
+</script>
+
+</body>
+</html>

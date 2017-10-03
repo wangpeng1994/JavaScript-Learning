@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>瀑布流布局</title>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+    .content {
+      position: relative;
+    }
+
+    .item {
+      position: absolute;
+      width: 200px;
+      margin-right: 10px;
+      margin-top: 10px;
+      transition: all 1s;
+    }
+
+    .h1 {
+      height: 200px;
+      background: #f4b300;
+    }
+    .h2 {
+      height: 300px;
+      background: #691BB8;
+    }
+    .h3 {
+      height: 400px;
+      background: #006ac1;
+    }
+  
+  </style>
+</head>
+<body>
+  <div class="content">
+    <div class="item h1">1</div>
+    <div class="item h3">2</div>
+    <div class="item h2">3</div>
+    <div class="item h1">4</div>
+    <div class="item h1">5</div>
+    <div class="item h2">6</div>
+    <div class="item h1">7</div>
+    <div class="item h2">8</div>
+    <div class="item h1">9</div>
+    <div class="item h3">10</div>
+    <div class="item h2">11</div>
+    <div class="item h3">12</div>
+    <div class="item h1">13</div>
+    <div class="item h2">14</div>
+  </div>
+
+  <script>
+
+    //可以封装成对象
+    var waterFall = (function(){
+      function init(){
+        waterfall()
+        $(window).resize(function(){
+          waterfall()
+        })
+      }
+      function waterfall(){
+        var nodeWidth = $('.item').width()
+        var colLength = parseInt( $('.content').width()/$('.item').width() ) //列数，数组的长度 = 窗口宽度/item宽度
+        var itemArr = [] //定义数组，存储的是内容高度
+        for(var i =0; i < colLength; i++){ //初始化数组
+          itemArr[i] = 0 
+        }
+
+        $('.item').each(function(){  //针对每一个item,找到数组最小值，和下标
+          var minValue = Math.min.apply(null, itemArr) //非严格模式下，null自动指向全局对象
+          var minIndex = itemArr.indexOf(minValue)
+      
+          $(this).css({
+            top: itemArr[minIndex], //或minValue
+            left: $(this).outerWidth(true) * minIndex //outerWidth是边框和外边距，默认false，true代表包括margin
+          })
+          itemArr[minIndex] += $(this).outerHeight(true) //更新当前数组下标下，存储的高度
+        })
+      }
+      return {
+        init: init
+      }
+    })()
+
+    waterFall.init()
+
+
+
+  
+  </script>
+
+
+
+
+</body>
+</html>
