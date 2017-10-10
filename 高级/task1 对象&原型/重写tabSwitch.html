@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>tab切换</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    ul,
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tab-ct .header>li {
+      width: 50px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      border: 1px solid #ccc;
+      display: inline-block;
+      margin-right: -5px;
+      border-right: none;
+      cursor: pointer;
+    }
+
+    .tab-ct .header>li:last-child {
+      border-right: 1px solid #ccc;
+    }
+
+    .tab-ct .header>li.active {
+      background: #a5daa6;
+    }
+
+    .tab-ct .content>li {
+      width: 149px;
+      height: 100px;
+      border: 1px solid #ccc;
+      background: #f5daa6;
+      border-top: none;
+      padding: 10px;
+      display: none;
+    }
+
+    .tab-ct .content>li.active {
+      display: block;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="tab-ct">
+    <ul class="header">
+      <li class="active">tab1</li>
+      <li>tab2</li>
+      <li>tab3</li>
+    </ul>
+    <ul class="content">
+      <li class="active">我是tab1内容</li>
+      <li>我是tab2内容</li>
+      <li>我是tab3内容</li>
+    </ul>
+  </div>
+
+  <div class="tab-ct">
+    <ul class="header">
+      <li class="active">tab1</li>
+      <li>tab2</li>
+      <li>tab3</li>
+    </ul>
+    <ul class="content">
+      <li class="active">我是tab1内容</li>
+      <li>我是tab2内容</li>
+      <li>我是tab3内容</li>
+    </ul>
+  </div>
+
+  <div class="tab-ct">
+      <ul class="header">
+        <li class="active">tab1</li>
+        <li>tab2</li>
+        <li>tab3</li>
+      </ul>
+      <ul class="content">
+        <li class="active">我是tab1内容</li>
+        <li>我是tab2内容</li>
+        <li>我是tab3内容</li>
+      </ul>
+    </div>
+
+
+  <script>
+    /*
+    var tabs = document.querySelectorAll('.tab-ct .header>li')
+    var panels = document.querySelectorAll('.tab-ct .content>li')
+
+
+    tabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+
+        tabs.forEach(function(node){
+          node.classList.remove('active')
+        })
+
+        this.classList.add('active') 
+        var index = [].indexOf.call(tabs, this)
+
+        panels.forEach(function(node){
+          node.classList.remove('active')
+        })
+        panels[index].classList.add('active')
+      })
+    })
+    */
+
+    /* 改装 */
+    /*
+    var Tab = {    //Tab是个功能对象
+      init: function(){
+        this.tabs = document.querySelectorAll('.tab-ct .header>li')
+        this.panels = document.querySelectorAll('.tab-ct .content>li')
+        this.tabHeader = document.querySelector('.tab-ct .header')
+        this.bind()
+      },
+
+      bind: function(){
+        var self = this
+        this.tabHeader.onclick = function(e){ //使用原生js事件代理的方式，这里的this就是this.tabCt了，所以要e.target
+          if(e.target.tagName.toLowerCase() === 'li'){ //直接获取tagName是大写
+            self.tabs.forEach(function(node){
+              node.classList.remove('active') //先去除所有的header li 的class
+            })
+            e.target.classList.add('active') 
+            var index = [].indexOf.call(self.tabs, e.target)
+            self.panels.forEach(function(node){
+              node.classList.remove('active')
+            })
+            self.panels[index].classList.add('active')
+          }
+        }
+      }
+
+    }
+    */
+
+    // init bind 随便起名字，当然最好语义话， 把代码改成 key value，具有简单的封装性，规避了全局变量，否则tabs 这名字很容易多次使用
+    
+    //Tab.init()
+
+    //以上这样子，还有个问题，如果页面上，有多个tabs 组件呢？ 能否写代码时，只按照单纯的tab功能去写，而不必考虑最后页面上引入多少个tab，具有普适性呢？
+
+
+
+  ////////////////////////////// 接下来用构造函数修改 tabSwitch ///////////////////////////
+
+    function Tab(tabNode){ //传入父容器节点
+
+        this.init = function(tabNode){
+          this.tabs = tabNode.querySelectorAll('.tab-ct .header>li')
+          this.panels = tabNode.querySelectorAll('.tab-ct .content>li')
+          this.tabHeader = tabNode.querySelector('.tab-ct .header')
+        }
+
+        this.bind = function(){
+          var self = this
+          this.tabHeader.onclick = function(e){
+            console.log(this) //这里面的this已经不能用了，代表的是 tabHeader，所以前面用self来代替
+
+            if(e.target.tagName.toLowerCase() === 'li'){
+              self.tabs.forEach(function(node){
+                node.classList.remove('active')
+              })
+              e.target.classList.add('active') 
+              var index = [].indexOf.call(self.tabs, e.target)
+              self.panels.forEach(function(node){
+                node.classList.remove('active')
+              })
+              self.panels[index].classList.add('active')
+            }
+          }
+        }
+
+        this.init(tabNode)  //调用这两个函数的时候才会执行，绑定的时候不会执行
+        this.bind()
+    }
+
+    var tabNode1 = document.querySelectorAll('.tab-ct')[0]
+    var tabNode2 = document.querySelectorAll('.tab-ct')[1]
+    var tabNode3 = document.querySelectorAll('.tab-ct')[2]
+    
+    
+    var tab1 = new Tab(tabNode1) //这里如果即使没有赋值，也是存在的，存在于内存里
+    var tab2 = new Tab(tabNode2)
+    var tab3 = new Tab(tabNode3)
+
+
+    /* 构造函数在解决了上面所有问题，同时为实例带来了类型，但可以注意到每个实例printName方法实际上作用一样，
+    但是每个实例要重复一遍，大量对象存在的时候是浪费内存  */
+
+
+
+
+  </script>
+
+</body>
+
+</html>

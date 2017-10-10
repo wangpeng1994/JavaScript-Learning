@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GoTop</title>
+  <style>
+
+  .ct {
+    width: 900px;
+    border: 1px solid orange;
+    margin: 0 auto;
+  }
+  
+  .box {
+    height: 2000px;
+    background: lightgray;
+  }
+
+  .goTop {
+    position: fixed;
+    right: 50px;
+    bottom: 15px;
+    width: 150px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid pink;
+    background: lightskyblue;
+    cursor: pointer;
+  }
+  
+  
+  </style>
+</head>
+<body>
+  <div class="ct">
+    <div class="box">我很高</div>
+    <!-- <div class="goTop">点我回到顶部</div> -->
+  </div>
+
+
+
+  <script>
+  
+    function GoTop(){
+      this.ct = document.querySelector('.ct')
+      this.target = this.createNode()
+      this.bindEvent()
+    }
+
+    GoTop.prototype.bindEvent = function(){
+      var self = this
+      this.target.style.display = 'none' //先隐藏
+      this.target.onclick = function(){
+        window.scrollTo(0, 0)         //当点击按钮时，横纵滚动条全部复位
+      }
+      window.onscroll = function(){
+        if(this.scrollY > 200){       //当滚动的时候，距离大于200px了，再显示gotop按钮
+          self.target.style.display = 'block'
+        }else{
+          self.target.style.display = 'none'
+        }
+      }
+    }
+
+    GoTop.prototype.createNode = function(){
+      var target = document.createElement('div')
+      target.innerText = '点我回到顶部'
+      target.classList.add('goTop')
+      this.ct.appendChild(target)
+      return target
+    }
+
+    var go1 = new GoTop()
+
+
+  </script>
+</body>
+</html>

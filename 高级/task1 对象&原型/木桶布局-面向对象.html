@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>木桶布局-面向对象</title>
+  <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .img-preview {
+      width: 1000px;
+      margin: 0 auto;
+    }
+
+    .img-row {
+      margin-bottom: 8px;
+    }
+
+    .img-row::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+    .img-box {
+      float: left;
+    }
+  
+    .img-line .img-box:firtst-child {
+      padding-left: 0;
+    }
+  
+  
+  </style>
+</head>
+<body>
+  <div class="img-preview">
+
+  </div>
+
+  <script>
+    
+    function Barrel($ct){
+      this.$ct = $ct
+      this.rowList = []
+      this.loadImg()
+    }
+
+    Barrel.prototype = {
+      loadImg: function(){
+        var _this = this
+        var imgs = this.getImgUrls(20)
+        for(var i = 0; i < imgs.length; i++){
+          let img = new Image()  //document.createElement('img') 注意这里如果使用var， 则作用域是整个loadImg函数，所以不会每次都创建img，不用let，就使用forEach 或者$.each，在传入的回调函数里去 var
+          img.src = imgs[i]
+          img.onload = function(){            
+            var imgInfo = {
+              target: $(img),
+              width: 200*(img.width/img.height), //HTMLImageElement接口提供了特别的属性和方法,比如 HTMLImageElement.width 和 HTMLImageElement.height
+              height: 200
+            }
+            _this.render(imgInfo)
+          }
+        }
+      },
+
+      render: function(imgInfo){
+        var clientWidth = this.$ct.width()
+        var rowWidth = 0
+        var newRowHeight = 0
+        var lastImgInfo = imgInfo
+        this.rowList.push(imgInfo)
+        for(var i = 0; i < this.rowList.length; i++){
+          rowWidth += this.rowList[i].width
+        }
+        if(rowWidth > clientWidth){   //如果图片宽度相加 大于 容器宽度
+          this.rowList.pop() //发现最后一个不该放，就拿出来
+          rowWidth -= lastImgInfo.width  //同时rowWidth宽度也要减去刚才加上去的
+          newRowHeight = clientWidth*200/rowWidth    // rowWidth/200 === clientWidth/ x 
+          this.layout(newRowHeight)
+          this.rowList = []
+          this.rowList.push(lastImgInfo)
+        }
+      },
+
+      layout: function(newRowHeight){
+        var $rowCt = $('<div class="img-row"></div>')
+        $.each(this.rowList, function(idx, imgInfo){
+          var $imgCt = $('<div class="img-box"></div>'),
+              $img = imgInfo.target
+              $img.height(newRowHeight)
+              $imgCt.append($img)
+              $rowCt.append($imgCt)
+        })
+        console.log(this.$ct)
+        this.$ct.append($rowCt)
+      },
+
+      getImgUrls: function(num){
+        var color, width, height, urls = []
+        for(var i = 0; i < num; i++){
+          color = Math.random().toString(16).slice(2, 8)
+          width = Math.floor(Math.random() * 100 + 50)
+          height = Math.floor(Math.random() * 30 + 50)
+          urls.push('http://placehold.it/' + width + 'x' + height + '/' + color + '/fff')
+        }
+        return urls
+      }
+    }
+
+    var barrel = new Barrel($('.img-preview')) //使用new 构造新木桶布局对象
+  
+  </script>
+
+</body>
+</html>

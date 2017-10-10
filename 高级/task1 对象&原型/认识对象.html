@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    var obj = {
+      a: 1,
+      b: 'wangpeng',
+      sayName: function(){
+        console.log(this.a)
+        console.log('hello')
+      }
+    }
+    
+    obj.sayName()
+    //输出 1 hello
+    //this 代表当前obj对象
+
+///////////////////////////////////////////////////////////
+
+    function People(name){
+      this.name = name
+      this.sayName = function(){
+        console.log(this.name)
+      }
+    }
+
+
+    var p1 = new People('wang')   //函数调用前， 加 new 表示：把这个函数作为构造函数，去创建一个对象
+    // p1 = {} 创建类的实例，空对象
+    // p1.name = 'wang'   this被设定为该实例，代表刚刚创建的空对象
+    // p1.sayName = function(){}
+    // return p1    return出对象
+
+    p1.name       //然后就可以这样调用了
+    p1.sayName()
+
+    var p2 = new People('peng')
+  
+  
+  
+  
+  
+  </script>
+
+</body>
+</html>
