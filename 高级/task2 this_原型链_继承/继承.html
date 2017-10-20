@@ -1,0 +1,74 @@
+<script>
+//ES6 之前，原生js是没有继承的
+
+
+/*      属性的获取     */
+
+function Person(name, age){
+  this.name = name
+  this.age = age
+}
+
+Person.prototype.sayName = function(){
+  console.log('My name is ' + this.name)
+}
+
+Person.prototype.walk = function(){
+  console.log(this.name + 'is walking')
+}
+
+var p = new Person('xiaofeng', 100)
+
+function Student(name, age, sex){
+  Person.bind(this)(name, age) //在一个类中执行另一个类的构造函数，并把ths绑定到当前新建实例
+  //Person.call(this, name, age)
+  this.sex = sex
+}
+
+
+/*      方法的获取  （貌似有三种方法）     */
+
+
+//如果不使用ES5 的Object.create,就借用一个空对象
+fn.prototype = Person.prototype
+function fn(){}
+Student.prototype = new fn() //相当于Student.prototype  成了空对象，空对象里只是存了个__proto__ 并指向 Person.prototype
+
+//Student.prototype = Object.create(Person.prototype) //创建一个拥有指定原型和属性的新对象，把Person.prototype 作为Student.prototype 的原型对象， 不能直接赋值，必须clone一份新的，因为存在引用关系，后续修改子类原型会改动父类原型
+//Student.prototype.__proto__ = Person.prototype
+Student.prototype.constructor = Student //接着又手动存 constructor
+
+Student.prototype.doing = function(){ //又继续存了doing方法   子类添加方法，要在修改其prototype之后，否则会被覆盖
+  console.log('I am studing')
+}
+
+var s = new Student('xiaofeng', 2, 'boy')
+
+
+
+/*        我们可以通过一个函数实现刚才的继承          */
+
+/*
+function inherit(superType, subType){
+    var _prototype  = Object.create(superType.prototype);
+    _prototype.constructor = subType;
+    subType.prototype = _prototype;
+}
+
+inherit(Person, Student)
+
+//接着在继承了之后，再写自己的方法
+//Student.prototype.doing = ...
+*/
+
+
+
+
+
+
+
+
+
+
+</script>
+

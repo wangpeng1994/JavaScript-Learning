@@ -125,8 +125,8 @@
 
     $imgCt.append($imgs.first().clone())
     $imgCt.prepend($imgs.last().clone())
-    $imgCt.width((imgCount + 2) * imgWidth)
-    $imgCt.css({left: -imgWidth}) //由于新增了img，所以目前展示的是新增的，而计划中的img在第二位，故需调整一格
+    $imgCt.width((imgCount + 2) * imgWidth) //真实容器的宽度，算上了clone的两张，有了宽度，后面才可以通过css或者animate实现定位
+    $imgCt.css({left: -imgWidth}) //初始到图片1的位置，由于新增了img，所以目前展示的是新增的，而计划中的img在第二位，故需调整一格
 
     $nextBtn.click(function(){
       playNext(1)//滚动一格，抽象一下,为了清晰明了
@@ -149,19 +149,19 @@
   
     function playNext(len){ //传入参数是滚动几格
       if(isAnimate) return;
-      isAnimate = true
+      isAnimate = true //声明动画已经开始，结束前，不接受任何点击，会被直接return
       console.log(isAnimate)
       $imgCt.animate({  //原先 left: '-=' + imgWidth
         left: '-=' + len*imgWidth  //left 已经在上面变成了 -320px， 这里每次点击，必须累加才行 left = left - imgWidth
-      }, function(){
-        pageIndex += len   
+      }, function(){  //每次动画结束后，需要立刻更新pageIndex，然后判断这次动画是否属于到了末尾，又被点击的情况
+        pageIndex += len  //更新pageIndex
         if(pageIndex === imgCount){
-          pageIndex = 0 //如果pageIndex到达了4（图片数量），则立即pageIndex变为0,同时回到初始化的时候第一张图片
-          $imgCt.css({left: -imgWidth}) //从clone img 转化为亲生的img，肉眼看不出来
+          pageIndex = 0 //如果pageIndex到达了4（图片数量），则立即pageIndex变为0
+          $imgCt.css({left: -imgWidth}) //同时回到初始化的时候第一张图片，即回到图片1的位置，这里使用的可是css，不是animate，所以从clone img 转化为亲生的img，肉眼看不出来
         }
         console.log(pageIndex)
-        setBullet()
-        isAnimate = false
+        setBullet() //设置指示灯
+        isAnimate = false //声明动画已经结束，可以接受下次点击
       })
     }
     function playPre(len){
@@ -171,9 +171,9 @@
         left: '+=' + len*imgWidth
       }, function(){
         pageIndex -= len
-        if(pageIndex === -1){ // 如果第一张，再往前，则此时立即跳到3，即 imgCount - 1
-          pageIndex = imgCount - 1
-          $imgCt.css({left: -imgCount*imgWidth})
+        if(pageIndex === -1){ //或者判断 pageIndex < 0,  如果本次点击动画属于第一张再往前，则此时立即跳到最后一张原始图片，即 imgCount - 1
+          pageIndex = imgCount - 1  //pageIndex 指向原始图片最后一张，但目前展示的图片实际上却是clone的最后一张
+          $imgCt.css({left: -imgCount*imgWidth})  //因此继续用css，悄无声息地定位到真正的最后一张图片
         }
         setBullet()
         isAnimate = false

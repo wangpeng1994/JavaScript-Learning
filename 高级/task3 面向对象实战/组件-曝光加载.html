@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://kejian.jirengu.com/static/js/jquery-1.11.1.min.js"></script>
+
+  <meta charset="utf-8">
+  <title>组件-曝光加载</title>
+  <style>
+    ul,li{
+      list-style:none;
+    }
+    .container{
+      width: 900px;
+      margin: 0 auto;
+    }
+    .container li{
+      float: left;
+      margin: 10px 10px;
+    }
+    .container li img{
+      width: 430px;
+    }
+    p {
+      float: left;
+    }
+
+  </style>
+</head>
+<body>
+<ul class="container">
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/1.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/2.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/3.jpg" /></a></li>
+  <li><a href="#"><img id=a src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/4.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/5.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/6.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/7.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/8.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/9.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/10.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/11.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/12.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/13.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/14.jpg" /></a></li>
+  <li><a href="#"><img id=b src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/15.jpg" /></a></li>
+  <li><a href="#"><img src="http://kejian.jirengu.com/data/fe/%E8%AF%BE%E4%BB%B6/32-%E6%87%92%E5%8A%A0%E8%BD%BD/code/blank.jpg" data-src="http://cdn.jirengu.com/book.jirengu.com/img/16.jpg" /></a></li>
+
+  <p id="hello">hello</p>
+  <p id="world">world</p>
+  
+</ul>
+
+<script type="text/javascript">
+
+/*
+//使用示例 ,以下代码过于丑陋，尤其对于多个图片的使用, 因此使用Lazy进行改造
+new Exposure($('#hello'), function($node){
+  $node.text( $node.text() + $node.text() )
+  $node.css({color: 'red'})
+})
+
+new Exposure($('#world'), function($node){
+  $node.text( 'hello ' + $node.text() )
+})
+
+$('.container img').each(function(idx, img){
+  new Exposure($(img), function($img){
+    loadImg($img)
+  })
+})
+*/
+
+var Lazy = (function(){
+  function Exposure($target, callback){
+    this.$target = $target
+    this.callback = callback
+    this.bind()
+    this.check() //需要先check一次，后面通过监听scroll事件，决定是否check
+  }
+  Exposure.prototype.bind = function(){
+    var _this = this
+    var clock
+    $(window).on('scroll', function(){   //滚动的时候再做一次判断
+      if(clock){            //每次过快地滚动，都会清除产生的N个定时器，只有停下来，稍等会，最后一个定时器才能生效，
+        clearTimeout(clock) //否则在此期间，又去滚动，会再次清除
+      }
+      clock = setTimeout(function(){ //滚动事件触发时，过300ms再执行
+        _this.check()
+      }, 300)
+    })
+  }
+  Exposure.prototype.check =function(){
+      if( this.checkShow(this.$target) ){ //判断是否 已经出现在视窗中
+        this.callback(this.$target)
+      }
+  }
+  Exposure.prototype.checkShow = function(){
+    var scrollTop = $(window).scrollTop() //滚动过去的高度
+    var windowHeight = $(window).height() //窗口的高度
+    var offsetTop = this.$target.offset().top  //元素距离文档顶部的高度
+    var nodeHeight = this.$target.height() //元素高度
+
+    if(offsetTop < scrollTop + windowHeight && offsetTop + nodeHeight > scrollTop){ //这里的判断，具体情况具体对待，可以进行像素加减
+      return true
+    } 
+    return false
+  }
+
+  return {  //真正调用Lazy时，只在乎Lazy返回的是什么
+    init: function($targets, callback){
+      $targets.each(function(idx, target){
+        new Exposure($(target), callback)
+      })
+    },//绑定元素，只曝光加载一次（只执行一次callback）
+    once: function($targets, callback){
+      $targets.each(function(idx, target){
+        function _callback($target){ //使用_callback进行包裹
+          callback($target) //第一次正常执行, 注意这里的callback是调用Lazy.once时传入的callback函数
+          this.callback = function(){} //之后把this.callback改为空函数，下一次只会执行空函数，注意这里的callback是新建对象的callback，也就是传入的_callback，和上面不一样
+        }
+        new Exposure($(target), _callback) //然后new 时，传入被_callback包裹了的回调函数进入函数构造过程
+      })
+    }
+  }
+})()
+
+
+/*     客官请慢用    */
+
+Lazy.init($('#hello'), function($node){
+  $node.css({color: 'red'})
+})
+Lazy.init($('#world'), function($node){
+  //console.log('world.....')
+  $node.text( $node.text() + '123' )
+})
+Lazy.once($('.container img'), function($node){
+  //console.log('图片设置.....')
+  $node.attr('src', $node.attr('data-src'))
+})
+
+
+</script>
+
+</body>
+</html>

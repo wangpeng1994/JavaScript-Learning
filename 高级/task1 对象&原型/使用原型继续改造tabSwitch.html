@@ -156,22 +156,24 @@
     }
 
     Tab.prototype.bind = function(){
-      var self = this
+      //var self = this
+      console.log(this) //this 指该Tab实例
       this.tabHeader.onclick = function(e){
-        console.log(this) //这里面的this已经不能用了，代表的是 tabHeader，所以前面用self来代替
-
+        //console.log(this) //这里面的this已经不能用了，代表的是 tabHeader，所以前面用self来代替
+        console.log(this) //用bind函数做了this的指定，所以这里的this 还是Tab实例
         if(e.target.tagName.toLowerCase() === 'li'){
-          self.tabs.forEach(function(node){
+          this.tabs.forEach(function(node){
             node.classList.remove('active')
           })
-          e.target.classList.add('active') 
-          var index = [].indexOf.call(self.tabs, e.target)
-          self.panels.forEach(function(node){
+          e.target.classList.add('active')
+          var index = [].indexOf.call(this.tabs, e.target) //必须用call，才能使用数组的indexOf方法，因为this.tabs是类数组对象，nodeList
+          //console.log(this.tabs) 输出类数组对象
+          this.panels.forEach(function(node){
             node.classList.remove('active')
           })
-          self.panels[index].classList.add('active')
+          this.panels[index].classList.add('active')
         }
-      }
+      }.bind(this)
     }
 
     var tabNode1 = document.querySelectorAll('.tab-ct')[0]
