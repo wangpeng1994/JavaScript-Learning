@@ -9,7 +9,7 @@ define(['jquery'], function($){
   WaterFall.prototype = {
     init: function(){
       this.nodeWidth = $('.waterfall>.item').outerWidth(true)
-      this.count = 20
+      this.count = 40
       this.colSumHeight = []
       this.imgWidth = $('.waterfall>.item').width()
       this.getResult(this.count)
