@@ -1,0 +1,22 @@
+{
+  "name": "xiaofeng-weather",
+  "version": "1.0.1",
+  "description": "A simple tool to get weather info in the command line",
+  "main": "index.js",
+  "bin": {
+    "weather": "./index.js"
+  },
+  "dependencies": {
+    "axios": "^0.17.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "weather",
+    "xiaofeng"
+  ],
+  "author": "xiaofeng",
+  "license": "ISC"
+}

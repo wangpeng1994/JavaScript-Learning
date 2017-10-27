@@ -1,0 +1,17 @@
+{
+  "name": "xiaofeng-demo3",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "xiaofengcanyue": "./index.js",
+    "xiaofengcanyue2": "./index.js",
+    "xiaofengcanyue3": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}

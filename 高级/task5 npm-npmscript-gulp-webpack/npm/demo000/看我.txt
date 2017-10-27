@@ -1,0 +1,2 @@
+演示 自己依赖了marked 的包 xiaofeng-demo0 上传后，下载引用，做成xiaofeng-demo00， 继续上传。
+然后，再下载下来，会发现 node_modules 包含了 marked、xiaofeng-demo0、xiaofeng-demo00 三个模块包 

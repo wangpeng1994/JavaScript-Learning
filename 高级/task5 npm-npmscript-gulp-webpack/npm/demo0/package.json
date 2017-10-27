@@ -1,0 +1,26 @@
+{
+  "name": "xiaofeng-demo0",
+  "version": "1.0.0",
+  "description": "这是npm学习的测试版本",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wangpeng1994"
+  },
+  "keywords": [
+    "\u001b[A\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[Cy:\u001b[B\u001b[D\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b:",
+    "xiaofeng"
+  ],
+  "author": "xiaofeng",
+  "license": "ISC",
+  "dependencies": {
+    "marked": "^0.3.6",
+    "requirejs": "^2.3.5"
+  },
+  "devDependencies": {
+    "easytpl": "^1.0.4"
+  }
+}
