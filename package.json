@@ -4,7 +4,7 @@
   "description": "日常上传",
   "main": "index.js",
   "scripts": {
-    "start": "git commit -am \"daily update\""
+    "start": "git commit -am \"daily update\" && git push"
   },
   "author": "xiaofeng",
   "license": "ISC"
