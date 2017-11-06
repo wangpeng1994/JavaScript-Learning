@@ -1,6 +1,5 @@
 var gulp = require('gulp')
 
-
 var cssnano = require('gulp-cssnano') //压缩css的gulp插件
 var concat = require('gulp-concat') //用来合并的gulp插件
 
@@ -13,5 +12,5 @@ gulp.task('build:css', function(){
     .pipe(gulp.dest('./dist/css'))
 })
 
-gulp.task('default', ['build:css']) //如果想默认gulp后执行，除了将上面的css直接改为default，也可以再创建一个任务叫default，如此命令行只需要 gulp 即可
+gulp.task('default') //如果想默认gulp后执行，除了将上面的css直接改为default，也可以再创建一个任务叫default，如此命令行只需要 gulp 即可
 
