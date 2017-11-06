@@ -1,0 +1,534 @@
+/* reset */
+* {
+  margin: 0;
+  padding: 0;
+  }
+ul  {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+/* common css */
+.container {
+  width: 1150px;
+  margin: 0 auto;
+}
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+section {
+  padding: 150px 0;
+  text-align: center;
+}
+/* 定义相应section背景色为灰色 */
+.bg-light-gray {
+  background-color: #e7e7e7;
+} 
+
+.section-heading {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+.section-subheading {
+  color: #666;
+  font-size: 16px;
+  font-style: italic;
+  font-weight:400;
+  margin-bottom: 75px;
+}
+
+
+/* 以下社交按钮是公用的，footer也会用到 */
+.social-buttons li {
+  width: 40px;
+  height: 40px;
+  padding: 0 5px;
+  display: inline-block;
+  line-height: 40px;
+}
+.social-buttons a {
+  width: 40px;
+  height: 40px;
+  display: block;
+  background:#000;
+  border-radius: 50%;
+  text-align: center;
+  transition: all .3s;
+}
+.social-buttons a i {
+  display: block;
+  color: #fff;
+  font-size: 20px;
+}
+.social-buttons a:hover {
+  background: #aa0000;
+}
+
+/* common css end */
+
+
+/* 定义头部背景图片 */
+header {
+  width: 100%;
+  height: 860px;
+  padding-top: 90px;
+}
+
+
+/* 定义导航栏 */
+nav {
+  position: fixed;
+  z-index: 999;
+  background: #000; 
+  width: 100%;
+  height: 90px;
+  box-sizing: border-box;
+  padding: 0 50px;
+}
+/* 定义logo，a标签如果是默认inline，就无法设置宽高，如果是block就会独占一行 */
+ nav > a {
+  display: inline-block;
+  height: 70px;
+  margin-top: 10px;
+}
+nav img {
+  height: 100%;
+}
+
+/* 定义navbar锚点 */
+nav .nav-list {
+  width: 500px;
+  float: right;
+  margin-top: 28px;
+}
+nav .nav-list li {
+  float: left;
+  padding-left: 30px;
+}
+nav .nav-list  a {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  position: relative;
+  transition: all 0.3s;
+}
+/* 定义锚点特效 */
+nav .nav-list a:hover {
+  color: #C70909;
+  font-size: 1.1em;
+}
+nav .nav-list a:hover::before, 
+nav .nav-list a:hover::after { 
+  position: absolute;
+}
+nav .nav-list a:hover::before {
+  content: '[';
+  left: -10px;
+  color: #C70909;
+}
+nav .nav-list a:hover::after {
+  content: ']';
+  right:  -10px; 
+  color: #C70909;
+}
+
+/* 定义section skills */
+
+#skills ul li {
+  width: calc(33.33% - 30px);
+  padding: 0 15px;
+  float: left;
+}
+#skills img {
+  display: block;
+  width: 120px;
+  margin: 80px auto 0 auto;
+  border: 8px solid #e7e7e7;
+  border-radius: 50%;
+}
+#skills h3 {
+  margin: 20px 0;
+}
+
+
+/* 定义section relation */
+
+
+/* 定义about */
+
+/* 定义圆圈 */
+#about .timeline li {
+  padding: 0 70px;
+  margin-bottom: 100px;
+  
+}
+#about .timeline img {
+  height: 100%;
+}
+#about .timeline {
+  position: relative;
+}
+#about .circle {
+  width: 154px;
+  height: 154px;
+  position: absolute;
+  left: 50%;
+  margin-left: -85px;
+  border: 8px solid #e7e7e7;
+  border-radius: 50%;
+  overflow: hidden;
+} 
+/* 定义时间轴线 */
+#about .timeline::before {
+  content: '';
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  margin-left: -2px;
+  border-left: 4px solid #e7e7e7;
+}
+/* 定义文本描述 */
+#about .story {
+  width: 350px;
+  padding: 0 20px 20px 20px;
+}
+#about .story h4 {
+  margin-bottom: 10px;
+}
+#about .story p {
+  color: #666;
+}
+/* 定义文本左右浮动区别 */
+#about .timeline li:nth-child(odd) {
+  float: left;
+  text-align: right;
+  padding-right: calc(100% - 420px);
+
+}
+#about .timeline li:nth-child(even) {
+  float: right;
+  text-align: left;
+  padding-left: calc(100% - 420px);
+}
+
+
+/* 定义section team */
+
+#team .team-member {
+  float: left;
+  width: calc(33.33% - 30px);
+  height: 365px;
+  padding: 0 15px;
+  margin-bottom: 80px;
+}
+#team .team-member img {
+  width: 240px;
+  height: 240px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+}
+#team .team-member h3 {
+  margin-top: 25px;
+}
+#team .team-member p {
+  margin :5px 0 10px 0;
+}
+
+/* team 底部文字 */
+#team > div > p {
+  width: 750px;
+  margin: 0 auto;
+}
+
+
+/* 定义aside 客户 logo */
+#clients ul li {
+  width: calc(25% - 35px);
+  height: 150px;
+  margin: 0 15px;
+  float: left;
+}
+
+#clients a {
+  display: block;
+  width: 120px;
+  height: 120px;
+  margin: 15px auto;
+  background: url("../../image/clients/1.jpg") -14px -147px no-repeat;
+  background-size: 650%;
+}
+/* 不同的客户商标 */
+#clients .clinent-2 a {
+  background-position: -170px -147px;
+}
+#clients .clinent-3 a {
+  background-position: -486px -147px;
+}
+#clients .clinent-4 a {
+  background-position: -645px -147px;
+}
+
+
+/* 定义section contact */
+
+#contact {
+  height: 580px;
+  background: url("../../image/contact/1.jpg") center center;
+  background-size: cover;
+} 
+#contact .section-heading {
+  color: #fff;
+}
+#contact .section-subheading {
+  color: #ddd;
+}
+/* 定义表单 */
+#contact .form-control {
+  box-sizing: border-box;
+  width: calc(50% - 5px);
+  height: 260px;
+  float: left;
+  padding: 0 15px;
+}
+#contact .form-control form {
+  margin-right: 7px;
+}
+/* 定义共同属性 */
+#contact input, textarea {
+  display: inline-block;
+  width: calc(100% - 40px);
+  height: 20px;
+  padding: 20px;
+  margin-bottom: 26px;
+  border: 3px solid #888;
+  border-radius: 5px;
+  outline: none;
+  resize: none;
+  font-family: "Roboto Slab", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+}
+/* 对textarea宽高单独微调 */
+#contact textarea {
+  width: 90%;
+  height: 80%;
+}
+/* 定义选中时字体样式 */
+#contact input::selection,
+#contact textarea::selection {
+  background: #FF8888;
+}
+/* 定义placeholder的样式 */
+ #contact input::-webkit-input-placeholder { 
+  color: #aaa;
+  font-weight: bold;
+}
+ #contact textarea::-webkit-input-placeholder { 
+  color: #aaa;
+  font-weight: bold;
+} 
+
+/* 定义按钮 */
+.btn {
+  display: inline-block;
+  width: 220px;
+  height: 70px;
+  margin-top: 30px;
+  background: #aa0000;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 70px;
+  border: 2px solid #c5b3a5;
+  border-radius: 7px;
+  transition: all 0.3s;
+
+}
+.btn:hover {
+  background: #ff2525;
+  cursor: pointer;
+}
+
+
+/* 定义footer */
+
+footer > div {
+  display: flex;
+  justify-content: center;
+  padding: 25px 0;
+  text-align: center;
+}
+footer > div > * {
+  width: 365px;
+  line-height: 40px;
+  padding: 0 15px;
+  font-size: 14px;
+}
+
+/* 定义右下角a标签样式 */
+footer .quicklinks {
+  display: flex;
+  justify-content: center;
+}
+footer .quicklinks li a {
+  color: red;
+}
+footer .quicklinks li a:hover {
+  text-decoration: underline;
+}
+footer .quicklinks li:last-child {
+  padding-left: 10px;
+}
+
+
+
+ /***
+ *
+ *模块化新增
+ *
+ ***/
+
+ /* carousel 轮播模块 */
+
+  /* 这个就是最外层窗口 */
+  .carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .carousel ul,
+  .carousel li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* 这里可以用after清除浮动，或者父容器生成BFC，以便包裹内部浮动元素 */
+  .carousel .img-ct {
+    position: absolute;
+    /* width: 1280px;  宽度不要写死，用js计算，因为后面要clone*/ 
+    overflow: hidden;
+  }
+  .carousel .img-ct>li {
+    float: left;
+  }
+  /* .carousel .img-ct img {
+
+  } */
+  
+  @media screen and (max-width: 1150px) {
+    .carousel {
+      width: 1150px;
+    }
+  }
+
+  .carousel .arrow {
+    position: absolute;
+    top: 50%;
+    margin-top: -15px;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    background: #000;
+    line-height: 40px;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+  }
+  .carousel .arrow:hover {
+    opacity: 0.7;
+  }
+  .carousel .pre {
+    left: 15px;
+  }
+  .carousel .next {
+    right: 15px;
+  }
+
+  .carousel .bullet {
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+    text-align: center;
+    font-size: 0;
+  }
+  .carousel .bullet>li {
+    display: inline-block;
+    width: 50px;
+    height: 8px;
+    margin: 0 3px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .carousel .bullet>li.active {
+    background: #ccc;
+  }
+
+
+  /* gotop 回到顶部模块 */
+
+  .goTop {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    color: #fff;
+    border-radius: 5px;
+    background: #000000;
+    cursor: pointer;
+  }
+  .goTop:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+
+  /* waterfall 瀑布流模块 */
+
+
+  .wrap > .waterfall {
+    position: relative;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .wrap > .waterfall > .item {
+    position: absolute;
+    width: 220px;
+    margin: 3px 5px;
+    opacity: 0;
+    transition: all 1s;
+  }
+
+  .wrap > .waterfall > .hide {
+    display: none;
+    margin: 0 5px;
+  }
+
+  .wrap > #load {
+    width: 150px;
+    height: 40px;
+    margin: 0 auto;
+    margin-top: 50px;
+    line-height: 40px;
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background: #000;
+    cursor: pointer;
+  }
+  .wrap > #load:hover {
+    background: rgba(0,0,0,0.8);
+  }
+
