@@ -52,40 +52,75 @@
 
   <script>
 
-    //可以封装成对象
-    var waterFall = (function(){
-      function init(){
-        waterfall()
+    // //可以封装成对象
+    // var waterFall = (function(){
+    //   function init(){
+    //     waterfall()
+    //     $(window).resize(function(){
+    //       waterfall()
+    //     })
+    //   }
+    //   function waterfall(){
+    //     var nodeWidth = $('.item').width()
+    //     var colLength = parseInt( $('.content').width()/nodeWidth ) //列数，数组的长度 = 窗口宽度/item宽度
+    //     var itemArr = [] //定义数组，存储的是内容高度
+    //     for(var i =0; i < colLength; i++){ //初始化数组
+    //       itemArr[i] = 0 
+    //     }
+
+    //     $('.item').each(function(){  //针对每一个item,找到数组最小值，和下标
+    //       var minValue = Math.min.apply(null, itemArr) //非严格模式下，null自动指向全局对象
+    //       var minIndex = itemArr.indexOf(minValue)
+      
+    //       $(this).css({
+    //         top: itemArr[minIndex], //或minValue
+    //         left: $(this).outerWidth(true) * minIndex //outerWidth是边框和外边距，默认false，true代表包括margin
+    //       })
+    //       itemArr[minIndex] += $(this).outerHeight(true) //更新当前数组下标下，存储的高度
+    //     })
+    //   }
+    //   return {
+    //     init: init
+    //   }
+    // })()
+
+    // waterFall.init()
+
+    
+    var WaterFall = (function(){
+
+      function init($ct){
+        render($ct)
         $(window).resize(function(){
-          waterfall()
+          render($ct)
         })
       }
-      function waterfall(){
-        var nodeWidth = $('.item').width()
-        var colLength = parseInt( $('.content').width()/$('.item').width() ) //列数，数组的长度 = 窗口宽度/item宽度
-        var itemArr = [] //定义数组，存储的是内容高度
-        for(var i =0; i < colLength; i++){ //初始化数组
-          itemArr[i] = 0 
+      function render($ct){
+        var $items = $ct.children()
+        var nodeWidth = $items.outerWidth(true) //每个节点含margin宽度
+        var colNum = parseInt( $(window).width()/nodeWidth ) //列数，数组的长度 = 窗口宽度/节点宽度
+        var colSumHeight = [] //定义数组，存储的是内容高度
+        for(var i =0; i < colNum; i++){ //初始化数组
+          colSumHeight[i] = 0 
         }
-
-        $('.item').each(function(){  //针对每一个item,找到数组最小值，和下标
-          var minValue = Math.min.apply(null, itemArr) //非严格模式下，null自动指向全局对象
-          var minIndex = itemArr.indexOf(minValue)
+        $items.each(function(){  //针对每一个item,找到数组最小值，和下标
+          var minValue = Math.min.apply(null, colSumHeight) //非严格模式下，null自动指向全局对象
+          var minIndex = colSumHeight.indexOf(minValue)
       
           $(this).css({
-            top: itemArr[minIndex], //或minValue
-            left: $(this).outerWidth(true) * minIndex //outerWidth是边框和外边距，默认false，true代表包括margin
+            top: minValue,
+            left: nodeWidth * minIndex //outerWidth是边框和外边距，默认false，true代表包括margin
           })
-          itemArr[minIndex] += $(this).outerHeight(true) //更新当前数组下标下，存储的高度
+          colSumHeight[minIndex] += $(this).outerHeight(true) //更新当前数组下标下，存储的高度
         })
       }
       return {
         init: init
       }
+
     })()
 
-    waterFall.init()
-
+    WaterFall.init($('.content'))
 
 
   

@@ -18,3 +18,5 @@ gulp.task('server', function(){ //静态服务器，基准目录为 src
   //当gulp监听到这些文件变动的时候，就去执行 reload
   gulp.watch(['**/*.css', '**/*.js', '**/*.html'], ['reload']) 
 })
+
+//命令行中gulp server 启动服务

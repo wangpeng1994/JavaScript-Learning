@@ -1,5 +1,3 @@
-<script>
-
 String.prototype.getMostOften = function(){
   //声明空对象，和只有一个值的数组（数组是对象，便于后面存储其他属性）
   var obj = {}, temp = [0]
@@ -25,6 +23,4 @@ String.prototype.getMostOften = function(){
 
 var str = 'ahbbccdeddddfg';
 var ch = str.getMostOften();
-console.log(ch); //d , 因为d 出现了5次
-
-</script>   
+console.log(ch); //d , 因为d 出现了5次 

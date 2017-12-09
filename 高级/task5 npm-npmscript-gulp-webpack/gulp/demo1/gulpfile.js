@@ -2,7 +2,7 @@ var gulp = require('gulp')
 
 //引入组件
 var cssnano = require('gulp-cssnano'), //CSS压缩
-  autoprefixer = require('gulp-autoprefixer'), //后编译，自动添加css兼容前缀
+  //autoprefixer = require('gulp-autoprefixer'), //后编译，自动添加css兼容前缀
   uglify = require('gulp-uglify'), //js压缩
   concat = require('gulp-concat'), //合并文件
 
@@ -10,7 +10,7 @@ var cssnano = require('gulp-cssnano'), //CSS压缩
   clean = require('gulp-clean'), //清空文件夹
 
   htmlmin = require('gulp-htmlmin'), //html压缩
-  jshint = require('gulp-jshint'), //js代码规范性检查
+  //jshint = require('gulp-jshint'), //js代码规范性检查
   imagemin = require('gulp-imagemin'), //图片压缩
 
   rev = require('gulp-rev'), //添加版本号
@@ -18,37 +18,37 @@ var cssnano = require('gulp-cssnano'), //CSS压缩
   useref = require('gulp-useref'); //解析html资源定位
 
 
-gulp.task('dist:css', function(){
-  gulp.src('dist/css/*').pipe(clean()) //可以每次执行前，清空对应目录的旧文件，以免文件名变了后，无法覆盖
-  return gulp.src('src/css/*.css')
-    .pipe(concat('merge.min.css'))
-    // .pipe(rename({  //重命名
-    //   basename: '',
-    //   prefix: 'merge',
-    //   suffix: '.min',
-    //   extname: '.css'
-    // }))
-    .pipe(cssnano())
-    .pipe(autoprefixer({
-      browsers: ['last 10 versions'],
-      cascade: false
-    }))
-    .pipe(gulp.dest('dist/css'))
-})
+// gulp.task('dist:css', function(){
+//   gulp.src('dist/css/*').pipe(clean()) //可以每次执行前，清空对应目录的旧文件，以免文件名变了后，无法覆盖
+//   return gulp.src('src/css/*.css')
+//     .pipe(concat('merge.min.css'))
+//     // .pipe(rename({  //重命名
+//     //   basename: '',
+//     //   prefix: 'merge',
+//     //   suffix: '.min',
+//     //   extname: '.css'
+//     // }))
+//     .pipe(cssnano())
+//     .pipe(autoprefixer({
+//       browsers: ['last 10 versions'],
+//       cascade: false
+//     }))
+//     .pipe(gulp.dest('dist/css'))
+// })
 
-gulp.task('dist:js', function(){
-  gulp.src('dist/js/*').pipe(clean())
-  return gulp.src('src/js/*.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('default')) //检查如果出错，则在命令行以默认样式输出报告
+// gulp.task('dist:js', function(){
+//   gulp.src('dist/js/*').pipe(clean())
+//   return gulp.src('src/js/*.js')
+//     .pipe(jshint())
+//     .pipe(jshint.reporter('default')) //检查如果出错，则在命令行以默认样式输出报告
 
-    .pipe(concat('merge.min.js'))
-    // .pipe(rename({
-    //   suffix: '.min'
-    // }))
-    .pipe(uglify())
-    .pipe(gulp.dest('dist/js/'))
-})
+//     .pipe(concat('merge.min.js'))
+//     // .pipe(rename({
+//     //   suffix: '.min'
+//     // }))
+//     .pipe(uglify())
+//     .pipe(gulp.dest('dist/js/'))
+// })
 
 gulp.task('dist:img', function(){
   return gulp.src('src/imgs/*')

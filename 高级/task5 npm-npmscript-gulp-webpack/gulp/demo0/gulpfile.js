@@ -12,5 +12,5 @@ gulp.task('build:css', function(){
     .pipe(gulp.dest('./dist/css'))
 })
 
-gulp.task('default') //如果想默认gulp后执行，除了将上面的css直接改为default，也可以再创建一个任务叫default，如此命令行只需要 gulp 即可
+gulp.task('default',['build:css']) //如果想默认gulp后执行，除了将上面的css直接改为default，也可以再创建一个任务叫default，如此命令行只需要 gulp 即可
 

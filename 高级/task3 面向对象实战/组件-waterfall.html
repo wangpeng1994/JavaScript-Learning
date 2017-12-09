@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>瀑布流布局</title>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+    .content {
+      position: relative;
+    }
+
+    .item {
+      position: absolute;
+      width: 200px;
+      margin-right: 10px;
+      margin-top: 10px;
+      transition: all 1s;
+    }
+
+    .h1 {
+      height: 200px;
+      background: #f4b300;
+    }
+    .h2 {
+      height: 300px;
+      background: #691BB8;
+    }
+    .h3 {
+      height: 400px;
+      background: #006ac1;
+    }
+  
+  </style>
+</head>
+<body>
+  <div class="content">
+    <div class="item h1">1</div>
+    <div class="item h3">2</div>
+    <div class="item h2">3</div>
+    <div class="item h1">4</div>
+    <div class="item h1">5</div>
+    <div class="item h2">6</div>
+    <div class="item h1">7</div>
+    <div class="item h2">8</div>
+    <div class="item h1">9</div>
+    <div class="item h3">10</div>
+    <div class="item h2">11</div>
+    <div class="item h3">12</div>
+    <div class="item h1">13</div>
+    <div class="item h2">14</div>
+  </div>
+
+  <script>
+    
+    function _WaterFall($ct){
+      this.init($ct)
+    }
+
+    _WaterFall.prototype = {
+      init: function($ct){
+        var self = this
+        this.render($ct)
+        $(window).on('resize', function(){
+          self.render($ct)
+        })
+      },
+      render: function($ct){
+        var $items = $ct.children(),
+          nodeWidth = $items.outerWidth(true),
+          colNum = parseInt( $(window).width()/nodeWidth ),
+          colSumHeight = []
+        for(var i =0; i < colNum; i++){ //初始化数组
+          colSumHeight[i] = 0 
+        }
+        $items.each(function(){  //针对每一个item,找到数组最小值，和下标
+          var minValue = Math.min.apply(null, colSumHeight) //非严格模式下，null自动指向全局对象
+          var minIndex = colSumHeight.indexOf(minValue)
+          $(this).css({
+            top: minValue,
+            left: nodeWidth * minIndex //outerWidth是边框和外边距，默认false，true代表包括margin
+          })
+          colSumHeight[minIndex] += $(this).outerHeight(true) //更新当前数组下标里存储的高度，另外瀑布流高度是不一样的，所以这里是遍历时的高度
+        })
+      }
+    }
+
+    function WaterFall($ct){
+      return new _WaterFall($ct)
+    }
+
+    
+    /*     客观请慢用     */
+
+    WaterFall($('.content'))
+    
+
+  </script>
+
+
+
+
+</body>
+</html>
